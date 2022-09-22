@@ -2,6 +2,7 @@ from re import T
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
+# from django.conf import settings
 
 
 class MyUser(AbstractUser, PermissionsMixin):
@@ -19,7 +20,7 @@ class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:
-            user = MyUser.objects.get(email=username)
+            user = UserModel.objects.get(email=username)
         except UserModel.DoesNotExist:
             return None
         else:

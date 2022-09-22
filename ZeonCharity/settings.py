@@ -14,6 +14,7 @@ from pathlib import Path
 # import django_heroku
 import os
 from django.utils.translation import gettext_lazy as _
+import django_heroku
 
 LANGUAGES = (
     ('en', _('English')),
@@ -166,3 +167,5 @@ PARLER_LANGUAGES = {
         'hide_untranslated': False,
     }
 }
+
+django_heroku.settings(locals())
