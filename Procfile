@@ -1,0 +1,1 @@
+web: gunicorn ZeonCharity.wsgi:application --log-file -

@@ -1,0 +1,108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-22 22:36+0600\n"
+"PO-Revision-Date: 2022-09-22 22:39+0000\n"
+"Last-Translator: Jonatan Ma <iswearican_1@outlook.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\ZeonCharity\settings.py:19
+msgid "English"
+msgstr "Английский"
+
+#: .\ZeonCharity\settings.py:20
+msgid "Russian"
+msgstr "Русский"
+
+#: .\cards\models.py:7 .\cards\models.py:20 .\cards\models.py:46
+msgid "title"
+msgstr "название"
+
+#: .\cards\models.py:8 .\cards\models.py:63 .\cards\models.py:95
+msgid "image"
+msgstr "картинка"
+
+#: .\cards\models.py:12
+msgid "Category"
+msgstr "Категория"
+
+#: .\cards\models.py:13
+msgid "Categories"
+msgstr "Категории"
+
+#: .\cards\models.py:21 .\cards\models.py:53
+msgid "description"
+msgstr "Описание"
+
+#: .\cards\models.py:22
+msgid "photo"
+msgstr "Фото"
+
+#: .\cards\models.py:38
+msgid "Fund"
+msgstr "Фонд"
+
+#: .\cards\models.py:39
+msgid "Funds"
+msgstr "Фонды"
+
+#: .\cards\models.py:61
+msgid "target_amnt"
+msgstr "целевая_сумма"
+
+#: .\cards\models.py:62
+msgid "total_amnt"
+msgstr "общая_сумма"
+
+#: .\cards\models.py:65
+msgid "deadline"
+msgstr "дедлайн"
+
+#: .\cards\models.py:87
+msgid "Card"
+msgstr "Карточка"
+
+#: .\cards\models.py:88
+msgid "Cards"
+msgstr "Карточки"
+
+#: .\cards\models.py:107
+msgid "Card Image"
+msgstr "Картинка карточки"
+
+#: .\cards\models.py:108
+msgid "Card Images"
+msgstr "Картинки карточек"
+
+#: .\cards\models.py:119
+msgid "donation_amnt"
+msgstr "сумма_доната"
+
+#: .\cards\models.py:121
+msgid "payment_dt"
+msgstr "время_доната"
+
+#: .\cards\models.py:129
+msgid "Donation"
+msgstr "Донат"
+
+#: .\cards\models.py:130
+msgid "Donations"
+msgstr "Донаты"
+
+#: .\user\models.py:8
+msgid "phone number"
+msgstr "номер телефона"
