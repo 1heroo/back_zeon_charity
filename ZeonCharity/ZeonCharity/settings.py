@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-6l$+py_km=&echz%&8v6thw60v(mf6#dvajahgc#2u*7n5&@mi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = []
+
+# auth conf
+AUTHENTICATION_BACKENDS = ['user.models.EmailBackend']
+AUTH_USER_MODEL = 'user.MyUser'
 
 
 # Application definition
@@ -37,8 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # custom apps
     'user.apps.UserConfig',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -100,10 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
-AUTH_USER_MODEL = 'user.MyUser'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
