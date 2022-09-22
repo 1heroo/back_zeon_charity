@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import *
 
 
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'title', 'photo')
@@ -12,6 +12,18 @@ class CardImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardImage
         fields = ['photo',]
+
+
+class FundSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fund
+        fields = (
+            'title',
+            'description',
+            'photo',
+            'total_raised',
+            'total_helpers'
+        )
 
 
 class CardSerializer(serializers.ModelSerializer):

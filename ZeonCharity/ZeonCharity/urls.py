@@ -30,11 +30,20 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-reg/', APIUserRegistration.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path(
-        'card/<int:id>',
+    path('card/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
-    ), 
+    ),
+    path('fund/<int:id>',
+        views.FundPageViewSet.as_view({'get': 'list'})
+    ),
     path('api-create-card/', views.createCard.as_view()),
-    path('categories/', views.CategoryViewSet.as_view({'get': 'list'}))
+    path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
+    path('funds/', views.FundViewSet.as_view({'get': 'list'})),
+    path('category_cards/<int:category_id>/<str:category>',
+        views.CategoryCardsViewSet.as_view({'get': 'list'})
+    ),
+    path('fund_cards/<int:fund_id>/<str:fund>',
+        views.FundCardsViewSet.as_view({'get': 'list'})
+    ), 
     
 ] + swagger
