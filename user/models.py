@@ -12,13 +12,14 @@ class MyUser(AbstractUser, PermissionsMixin):
 
 
 from django.contrib.auth import get_user_model
+from user.models import MyUser
 from django.contrib.auth.backends import ModelBackend
 
 class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
         try:
-            user = UserModel.objects.get(email=username)
+            user = MyUser.objects.get(email=username)
         except UserModel.DoesNotExist:
             return None
         else:
