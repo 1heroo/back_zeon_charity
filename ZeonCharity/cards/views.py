@@ -28,6 +28,22 @@ class FundViewSet(viewsets.ModelViewSet):
     serializer_class = FundSerializer
 
 
+class VolunteerViewSet(viewsets.ModelViewSet):
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
+
+
+class VolunteerPageViewSet(viewsets.ModelViewSet):
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = Volunteer.objects.filter(id=kwargs['id'])
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 class FundPageViewSet(viewsets.ModelViewSet):
     queryset = Fund.objects.all()
     serializer_class = FundSerializer
@@ -59,6 +75,22 @@ class createCard(generics.CreateAPIView):
             data = request.data
             current_category = Category.objects.get(pk=data['category'])
             data['category'] = current_category
+            new_obj = Card.objects.create(**data)
+
+            new_obj.save()
+            
+            return Response({'info': 'successfuly added'})
+        except:
+            return Response({'info': 'invalid data!'})
+
+
+class createVolunteerProject(generics.CreateAPIView):
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
+
+    def post(self, request):
+        try:
+            data = request.data
             new_obj = Card.objects.create(**data)
 
             new_obj.save()

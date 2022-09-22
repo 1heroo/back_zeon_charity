@@ -37,13 +37,18 @@ urlpatterns = [
         views.FundPageViewSet.as_view({'get': 'list'})
     ),
     path('api-create-card/', views.createCard.as_view()),
+    path('api-create-volunteer/', views.createVolunteerProject.as_view()),
     path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
     path('funds/', views.FundViewSet.as_view({'get': 'list'})),
+    path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
     path('category_cards/<int:category_id>/<str:category>',
         views.CategoryCardsViewSet.as_view({'get': 'list'})
     ),
     path('fund_cards/<int:fund_id>/<str:fund>',
         views.FundCardsViewSet.as_view({'get': 'list'})
+    ),
+    path('volunteer/<int:id>',
+        views.VolunteerPageViewSet.as_view({'get': 'list'})
     ), 
     
 ] + swagger

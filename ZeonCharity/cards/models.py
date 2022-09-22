@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from location_field.models.plain import PlainLocationField
 
 
 class Category(models.Model):
@@ -126,3 +127,31 @@ class Donations(models.Model):
         db_table = 'donation'
         verbose_name = 'Donation'
         verbose_name_plural = 'Donations'
+
+
+class Volunteer(models.Model):
+    title = models.CharField(db_column='title', max_length=100, blank=False)
+    description = models.TextField(db_column='description', max_length=1000, blank=False)
+    photo = models.ImageField(null=True, blank=True, upload_to='images/')
+    city = models.CharField(max_length=255)
+    location = PlainLocationField(based_fields=['city'], zoom=7)
+    start_dt = models.DateTimeField(
+        db_column='start_dt',
+        blank=True,
+        null=True
+    )
+    end_dt = models.DateTimeField(
+        db_column='end_dt',
+        blank=True,
+        null=True
+    )
+    responsibility = models.TextField(db_column='responsibility', max_length=1000, blank=False)
+    requirements = models.TextField(db_column='requirements', max_length=1000, blank=False)
+
+    class Meta:
+        db_table = 'volunteer'
+        verbose_name = 'Volunteer'
+        verbose_name_plural = 'Volunteers'
+
+    def __str__(self):
+        return self.title
