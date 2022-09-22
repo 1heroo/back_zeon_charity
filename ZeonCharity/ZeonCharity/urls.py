@@ -17,11 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from user.views import *
 from .yasg import urlpatterns as swagger
+from cards import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api-reg/', APIUserRegistration.as_view())
+    path('api-reg/', APIUserRegistration.as_view()),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(
+        'card/<int:id>',
+        views.CardViewSet.as_view({'get': 'list'})
+    ), 
     
 ] + swagger
