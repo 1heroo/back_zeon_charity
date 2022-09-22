@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from location_field.models.plain import PlainLocationField
+from user.models import MyUser
 
 
 class Category(models.Model):
@@ -109,7 +110,12 @@ class CardImage(models.Model):
 
 
 class Donations(models.Model):
-    user_id =  models.IntegerField(db_column='user_id',blank=False)
+    user = models.ForeignKey(
+        MyUser,
+        related_name='users',
+        on_delete=models.SET_NULL,
+        null=True, blank=True
+    )
     card = models.ForeignKey(
         Card,
         related_name='donations',
@@ -122,6 +128,7 @@ class Donations(models.Model):
         blank=True,
         null=True
     )
+    region = models.CharField(db_column='region', max_length=100, blank=True)
 
     class Meta:
         db_table = 'donation'

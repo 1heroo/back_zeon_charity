@@ -37,10 +37,11 @@ admin.site.register(Card, CardAdmin)
 
 class DonationsAdmin(admin.ModelAdmin):
     list_display = (
-        'user_id',
+        'user',
         'card',
         'donation_amnt',
-        'payment_dt'
+        'payment_dt',
+        'region'
     )
 
 admin.site.register(Donations, DonationsAdmin)
