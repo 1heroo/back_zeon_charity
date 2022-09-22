@@ -47,6 +47,7 @@ class Card(models.Model):
         Category,
         related_name='category_list',
         on_delete=models.SET_NULL,
+        blank=True,
         null=True
     )
     description = models.TextField(db_column='description', max_length=1000, blank=False)

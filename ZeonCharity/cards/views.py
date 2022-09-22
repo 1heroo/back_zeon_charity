@@ -4,6 +4,8 @@ from django.db.models import Sum
 from .models import *
 from .serializers import *
 
+from rest_framework.decorators import action
+
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -22,6 +24,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
+
 class CardViewSet(viewsets.ModelViewSet):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
@@ -31,3 +34,21 @@ class CardViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class createCard(generics.CreateAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
+    def post(self, request):
+        try:
+            data = request.data
+            current_category = Category.objects.get(pk=data['category'])
+            data['category'] = current_category
+            new_obj = Card.objects.create(**data)
+
+            new_obj.save()
+            
+            return Response({'info': 'successfuly added'})
+        except:
+            return Response({'info': 'invalid data!'})

@@ -18,6 +18,12 @@ from django.urls import path, include
 from user.views import *
 from .yasg import urlpatterns as swagger
 from cards import views
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'cards', views.CardViewSet)
 
 
 urlpatterns = [
@@ -28,5 +34,7 @@ urlpatterns = [
         'card/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
     ), 
+    path('api-create-card/', views.createCard.as_view()),
+    path('categories/', views.CategoryViewSet.as_view({'get': 'list'}))
     
 ] + swagger
