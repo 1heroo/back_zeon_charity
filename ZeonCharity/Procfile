@@ -1,0 +1,1 @@
+web: gunicorn kahoot.wsgi:application --log-file -
