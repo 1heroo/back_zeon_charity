@@ -19,7 +19,8 @@ from user.views import *
 from .yasg import urlpatterns as swagger
 from cards import views
 from rest_framework import routers
-
+from django.conf.urls.static import static
+from ZeonCharity import settings
 
 router = routers.DefaultRouter()
 router.register(r'categories', views.CategoryViewSet)
@@ -29,7 +30,7 @@ router.register(r'cards', views.CardViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-reg/', APIUserRegistration.as_view()),
-    # path('api-login/', APIUserLogin.as_view()),
+    path('api-login/', APIUserLogin.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('card/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
@@ -53,6 +54,7 @@ urlpatterns = [
         views.VolunteerPageViewSet.as_view({'get': 'list'})
     ),
     path('stats/', views.CalculateStat.as_view()),
-    path('payment/', views.paymentHandler.as_view())
+    path('payment/', views.paymentHandler.as_view()),
+
     
-] + swagger
+] + swagger + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

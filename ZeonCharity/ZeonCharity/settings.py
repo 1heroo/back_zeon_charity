@@ -150,3 +150,5 @@ LOCATION_FIELD = {
 AUTHENTICATION_BACKENDS = ['user.models.EmailBackend']
 AUTH_USER_MODEL = 'user.MyUser'
 
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

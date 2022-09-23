@@ -6,7 +6,7 @@ from user.models import MyUser
 
 class Category(models.Model):
     title = models.CharField(db_column='title', max_length=100, blank=False)
-    photo = models.ImageField(null=True, blank=True, upload_to='images/')
+    photo = models.ImageField(null=True, blank=True, upload_to='media/')
 
     class Meta:
         db_table = 'category'
@@ -20,7 +20,7 @@ class Category(models.Model):
 class Fund(models.Model):
     title = models.CharField(db_column='title', max_length=100, blank=False)
     description = models.TextField(db_column='description', max_length=1000, blank=False)
-    photo = models.ImageField(null=True, blank=True, upload_to='images/')
+    photo = models.ImageField(null=True, blank=True, upload_to='media/')
 
     @property
     def total_raised(self):
@@ -62,7 +62,7 @@ class Card(models.Model):
     )
     target_amnt = models.FloatField(db_column='target_amnt',blank=False, default=0)
     total_amnt = models.FloatField(db_column='total_amnt',blank=False, default=0)
-    photo = models.ImageField(null=True, blank=True, upload_to='images/')
+    photo = models.ImageField(null=True, blank=True, upload_to='media/')
     deadline = models.DateTimeField(
         db_column='deadline',
         blank=True,
@@ -93,7 +93,7 @@ class Card(models.Model):
 
 
 class CardImage(models.Model):
-    photo = models.ImageField(null=True, blank=True, upload_to='images/')
+    photo = models.ImageField(null=True, blank=True, upload_to='media/')
     card = models.ForeignKey(
         Card,
         related_name='card_images',
@@ -140,7 +140,7 @@ class Donations(models.Model):
 class Volunteer(models.Model):
     title = models.CharField(db_column='title', max_length=100, blank=False)
     description = models.TextField(db_column='description', max_length=1000, blank=False)
-    photo = models.ImageField(null=True, blank=True, upload_to='images/')
+    photo = models.ImageField(null=True, blank=True, upload_to='media/')
     city = models.CharField(max_length=255)
     location = PlainLocationField(based_fields=['city'], zoom=7)
     start_dt = models.DateTimeField(
