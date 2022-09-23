@@ -8,6 +8,12 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'photo')
 
 
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Donations
+        fields = ('user', 'card', 'donation_amnt')
+
+
 class CardImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardImage

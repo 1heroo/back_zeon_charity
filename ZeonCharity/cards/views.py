@@ -4,6 +4,7 @@ from .models import *
 from .serializers import *
 from .services import stats, stats_proba
 from rest_framework.decorators import action
+from hashlib import md5
 
 
 from rest_framework import viewsets
@@ -125,3 +126,32 @@ class FundCardsViewSet(viewsets.ModelViewSet):
 class CalculateStat(generics.ListAPIView):
     def get(self, request):
         return Response({'stats': stats(), 'stats_proba': stats_proba()})
+
+
+class paymentHandler(generics.CreateAPIView):
+
+    queryset = Donations.objects.all()
+    serializer_class = DonationSerializer
+    def post(self, request):
+        data_req = request.data
+        card_id = data_req['card']
+        user_id = data_req['user']
+        pg_order_id=111
+        pg_merchant_id=535456
+        pg_amount=data_req['donation_amnt']
+        pg_description='test-bega'
+        pg_salt='some-salt'
+
+        data = f'init_payment.php;{pg_amount};{pg_description};{pg_merchant_id};{pg_order_id};{pg_salt};LeFnP16MP6AU6YKc'
+        ps_sig = md5(data.encode('utf-8')).hexdigest()
+
+        post_url = f'https://api.paybox.money/init_payment.php?pg_order_id={pg_order_id}&pg_merchant_id={pg_merchant_id}&pg_amount={pg_amount}&pg_description={pg_description}&pg_salt={pg_salt}&pg_sig={ps_sig}'
+        new_donation = Donations.objects.create(
+            user=MyUser.objects.get(pk=user_id),
+            card=Card.objects.get(pk=card_id),
+            donation_amnt=pg_amount
+        )
+        return Response({'response': post_url}) 
+
+
+

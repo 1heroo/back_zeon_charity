@@ -124,6 +124,7 @@ class Donations(models.Model):
     )
     donation_amnt = models.FloatField(db_column='donation_amnt',blank=False, default=0)
     payment_dt = models.DateTimeField(
+        default=datetime.now(),
         db_column='payment_dt',
         blank=True,
         null=True
