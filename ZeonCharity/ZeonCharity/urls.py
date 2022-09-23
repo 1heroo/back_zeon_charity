@@ -35,6 +35,7 @@ urlpatterns = [
     path('card/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
     ),
+    path('search/', views.SearchModelView.as_view({'get': 'list'})),
     path('fund/<int:id>',
         views.FundPageViewSet.as_view({'get': 'list'})
     ),

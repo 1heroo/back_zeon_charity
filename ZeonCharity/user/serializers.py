@@ -15,4 +15,6 @@ class RegUserSerializer(serializers.Serializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(max_length=128)
-    
+
+
+
