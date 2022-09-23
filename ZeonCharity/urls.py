@@ -59,5 +59,6 @@ urlpatterns = i18n_patterns(
         views.FundCardsViewSet.as_view({'get': 'list'})
     ),
     path('stats/', views.CalculateStat.as_view()),
+    path('payment/', views.paymentHandler.as_view())
     
 ) + swagger

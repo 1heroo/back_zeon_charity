@@ -47,6 +47,7 @@ class Fund(models.Model):
 class Card(models.Model):
     title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
     category = models.ForeignKey(
+        _('category'),
         to=Category,
         related_name='category_list',
         on_delete=models.SET_NULL,
@@ -55,6 +56,7 @@ class Card(models.Model):
     )
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
     fund = models.ForeignKey(
+        _('fund'),
         to=Fund,
         related_name='funds',
         on_delete=models.SET_NULL,
@@ -97,6 +99,7 @@ class Card(models.Model):
 class CardImage(models.Model):
     photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/')
     card = models.ForeignKey(
+        _('card'),
         to=Card,
         related_name='card_images',
         on_delete=models.CASCADE
@@ -113,12 +116,14 @@ class CardImage(models.Model):
 
 class Donations(models.Model):
     user = models.ForeignKey(
+        _('user'),
         to=MyUser,
         related_name='users',
         on_delete=models.SET_NULL,
         null=True, blank=True
     )
     card = models.ForeignKey(
+        _('card'),
         to=Card,
         related_name='donations',
         on_delete=models.SET_NULL,
@@ -127,6 +132,7 @@ class Donations(models.Model):
     donation_amnt = models.FloatField(_('donation_amnt'), db_column='donation_amnt',blank=False, default=0)
     payment_dt = models.DateTimeField(
         _('payment_dt'),
+        default=datetime.now(),
         db_column='payment_dt',
         blank=True,
         null=True
@@ -159,10 +165,12 @@ class Volunteer(models.Model):
     responsibility = models.TextField(_('responsibility'), db_column='responsibility', max_length=1000, blank=False)
     requirements = models.TextField(_('requirements'), db_column='requirements', max_length=1000, blank=False)
 
+    email = models.
+
     class Meta:
         db_table = 'volunteer'
-        verbose_name = 'Volunteer'
-        verbose_name_plural = 'Volunteers'
+        verbose_name = _('Volunteer')
+        verbose_name_plural = _('Volunteers')
 
     def __str__(self):
         return self.title

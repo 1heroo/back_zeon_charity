@@ -1,6 +1,10 @@
 from rest_framework import serializers
 from .models import *
 
+class DonationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Donations
+        fields = ('user', 'card', 'donation_amnt')
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
