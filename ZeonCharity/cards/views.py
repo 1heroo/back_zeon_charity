@@ -67,6 +67,11 @@ class CardViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class CardsViewSet(viewsets.ModelViewSet):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
+
 class createCard(generics.CreateAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializer

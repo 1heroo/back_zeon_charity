@@ -29,7 +29,7 @@ router.register(r'cards', views.CardViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-reg/', APIUserRegistration.as_view()),
-    path('api-login/', APIUserLogin.as_view()),
+    # path('api-login/', APIUserLogin.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('card/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
@@ -41,6 +41,7 @@ urlpatterns = [
     path('api-create-volunteer/', views.createVolunteerProject.as_view()),
     path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
     path('funds/', views.FundViewSet.as_view({'get': 'list'})),
+    path('cards/', views.CardsViewSet.as_view({'get': 'list'})),
     path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
     path('category_cards/<int:category_id>/<str:category>',
         views.CategoryCardsViewSet.as_view({'get': 'list'})
