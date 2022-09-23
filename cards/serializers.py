@@ -14,6 +14,34 @@ class CardImageSerializer(serializers.ModelSerializer):
         fields = ['photo',]
 
 
+class FundSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fund
+        fields = (
+            'title',
+            'description',
+            'photo',
+            'total_raised',
+            'total_helpers'
+        )
+
+
+class VolunteerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Volunteer
+        fields = (
+            'title',
+            'description',
+            'photo',
+            'city',
+            'location',
+            'start_dt',
+            'end_dt',
+            'responsibility',
+            'requirements'
+        )
+
+
 class CardSerializer(serializers.ModelSerializer):
     card_images = CardImageSerializer(many=True, read_only=True)
     class Meta:

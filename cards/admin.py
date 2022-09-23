@@ -40,7 +40,8 @@ class DonationsAdmin(admin.ModelAdmin):
         'user_id',
         'card',
         'donation_amnt',
-        'payment_dt'
+        'payment_dt',
+        'region'
     )
 
 admin.site.register(Donations, DonationsAdmin)
@@ -56,3 +57,19 @@ class FundAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(Fund, FundAdmin)
+
+
+class VolunteerAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'description',
+        'photo',
+        'city',
+        'location',
+        'start_dt',
+        'end_dt',
+        'responsibility',
+        'requirements'
+    )
+
+admin.site.register(Volunteer, VolunteerAdmin)

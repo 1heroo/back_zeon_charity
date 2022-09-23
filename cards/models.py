@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 from django.utils.translation import gettext_lazy as _
+from location_field.models.plain import PlainLocationField
+from user.models import MyUser
 
 
 class Category(models.Model):
@@ -48,6 +50,7 @@ class Card(models.Model):
         to=Category,
         related_name='category_list',
         on_delete=models.SET_NULL,
+        blank=True,
         null=True
     )
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
@@ -109,7 +112,12 @@ class CardImage(models.Model):
 
 
 class Donations(models.Model):
-    user_id =  models.IntegerField(db_column='user_id',blank=False)
+    user = models.ForeignKey(
+        to=MyUser,
+        related_name='users',
+        on_delete=models.SET_NULL,
+        null=True, blank=True
+    )
     card = models.ForeignKey(
         to=Card,
         related_name='donations',
@@ -118,13 +126,43 @@ class Donations(models.Model):
     )
     donation_amnt = models.FloatField(_('donation_amnt'), db_column='donation_amnt',blank=False, default=0)
     payment_dt = models.DateTimeField(
-        _('payment_dt'), 
+        _('payment_dt'),
         db_column='payment_dt',
         blank=True,
         null=True
     )
+    region = models.CharField(_('region'), db_column='region', max_length=100, blank=True)
 
     class Meta:
         db_table = 'donation'
         verbose_name = _('Donation')
         verbose_name_plural = _('Donations')
+
+class Volunteer(models.Model):
+    title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
+    description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
+    photo = models.ImageField(_('photo'), null=True, blank=True, upload_to='images/')
+    city = models.CharField(_('city'), max_length=255)
+    location = PlainLocationField(verbose_name=_('location'), based_fields=['city'], zoom=7)
+    start_dt = models.DateTimeField(
+        _('start_dt'), 
+        db_column='start_dt',
+        blank=True,
+        null=True
+    )
+    end_dt = models.DateTimeField(
+        _('end_dt'), 
+        db_column='end_dt',
+        blank=True,
+        null=True
+    )
+    responsibility = models.TextField(_('responsibility'), db_column='responsibility', max_length=1000, blank=False)
+    requirements = models.TextField(_('requirements'), db_column='requirements', max_length=1000, blank=False)
+
+    class Meta:
+        db_table = 'volunteer'
+        verbose_name = 'Volunteer'
+        verbose_name_plural = 'Volunteers'
+
+    def __str__(self):
+        return self.title

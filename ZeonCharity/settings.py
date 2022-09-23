@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
     # custom apps
     'user.apps.UserConfig',
+    'location_field.apps.DefaultConfig',
     'rest_framework',
     'drf_yasg',
     'cards',
@@ -169,3 +170,10 @@ PARLER_LANGUAGES = {
 }
 
 django_heroku.settings(locals())
+
+LOCATION_FIELD = {
+    'provider.google.api': '//maps.google.com/maps/api/js?sensor=false',
+    'provider.google.api_key': '<PLACE YOUR API KEY HERE>',
+    'provider.google.api_libraries': '',
+    'provider.google.map.type': 'ROADMAP',
+}

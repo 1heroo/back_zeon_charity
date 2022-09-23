@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-22 22:36+0600\n"
+"POT-Creation-Date: 2022-09-23 07:39+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,90 +18,119 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\ZeonCharity\settings.py:19
+#: .\ZeonCharity\settings.py:20
 msgid "English"
 msgstr ""
 
-#: .\ZeonCharity\settings.py:20
+#: .\ZeonCharity\settings.py:21
 msgid "Russian"
 msgstr ""
 
-#: .\cards\models.py:7 .\cards\models.py:20 .\cards\models.py:46
+#: .\cards\models.py:9 .\cards\models.py:22 .\cards\models.py:48
+#: .\cards\models.py:142
 msgid "title"
 msgstr ""
 
-#: .\cards\models.py:8 .\cards\models.py:63 .\cards\models.py:95
+#: .\cards\models.py:10 .\cards\models.py:66 .\cards\models.py:98
 msgid "image"
 msgstr ""
 
-#: .\cards\models.py:12
+#: .\cards\models.py:14
 msgid "Category"
 msgstr ""
 
-#: .\cards\models.py:13
+#: .\cards\models.py:15
 msgid "Categories"
 msgstr ""
 
-#: .\cards\models.py:21 .\cards\models.py:53
+#: .\cards\models.py:23 .\cards\models.py:56 .\cards\models.py:143
 msgid "description"
 msgstr ""
 
-#: .\cards\models.py:22
+#: .\cards\models.py:24 .\cards\models.py:144
 msgid "photo"
 msgstr ""
 
-#: .\cards\models.py:38
+#: .\cards\models.py:40
 msgid "Fund"
 msgstr ""
 
-#: .\cards\models.py:39
+#: .\cards\models.py:41
 msgid "Funds"
 msgstr ""
 
-#: .\cards\models.py:61
+#: .\cards\models.py:64
 msgid "target_amnt"
 msgstr ""
 
-#: .\cards\models.py:62
+#: .\cards\models.py:65
 msgid "total_amnt"
 msgstr ""
 
-#: .\cards\models.py:65
+#: .\cards\models.py:68
 msgid "deadline"
 msgstr ""
 
-#: .\cards\models.py:87
+#: .\cards\models.py:90
 msgid "Card"
 msgstr ""
 
-#: .\cards\models.py:88
+#: .\cards\models.py:91
 msgid "Cards"
 msgstr ""
 
-#: .\cards\models.py:107
+#: .\cards\models.py:110
 msgid "Card Image"
 msgstr ""
 
-#: .\cards\models.py:108
+#: .\cards\models.py:111
 msgid "Card Images"
 msgstr ""
 
-#: .\cards\models.py:119
+#: .\cards\models.py:127
 msgid "donation_amnt"
 msgstr ""
 
-#: .\cards\models.py:121
+#: .\cards\models.py:129
 msgid "payment_dt"
 msgstr ""
 
-#: .\cards\models.py:129
+#: .\cards\models.py:134
+msgid "region"
+msgstr ""
+
+#: .\cards\models.py:138
 msgid "Donation"
 msgstr ""
 
-#: .\cards\models.py:130
+#: .\cards\models.py:139
 msgid "Donations"
 msgstr ""
 
-#: .\user\models.py:8
+#: .\cards\models.py:145
+msgid "city"
+msgstr ""
+
+#: .\cards\models.py:146
+msgid "location"
+msgstr ""
+
+#: .\cards\models.py:148
+msgid "start_dt"
+msgstr ""
+
+#: .\cards\models.py:154
+msgid "end_dt"
+msgstr ""
+
+#: .\cards\models.py:159
+msgid "responsibility"
+msgstr ""
+
+#: .\cards\models.py:160
+msgid "requirements"
+msgstr ""
+
+#: .\user\models.py:9
 msgid "phone number"
 msgstr ""
