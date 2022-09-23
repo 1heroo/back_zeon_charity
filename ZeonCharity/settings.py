@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'cards',
     'rosetta',
-    'parler'
+    'parler',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,8 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware', # SET BETWEEN SESSIONMIDDLEWARE AND COMMONMIDDLEWARE
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -79,6 +82,8 @@ LOCALE_PATHS = [
 ]
 
 ROOT_URLCONF = 'ZeonCharity.urls'
+
+CORS_ALLOW_ALL_ORIGINS: True
  
 TEMPLATES = [
     {
