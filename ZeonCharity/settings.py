@@ -45,7 +45,6 @@ AUTH_USER_MODEL = 'user.MyUser'
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -148,7 +147,8 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -187,3 +187,10 @@ LOCATION_FIELD = {
 # auth conf
 AUTHENTICATION_BACKENDS = ['user.models.EmailBackend']
 AUTH_USER_MODEL = 'user.MyUser'
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+
+# AWS_S3_ACCESS_KEY_ID = 'AKIAR6VLE4O2FFRI3PHU'
+# AWS_S3_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'zeoncharitybucket'

@@ -20,6 +20,8 @@ from .yasg import urlpatterns as swagger
 from cards import views
 from django.conf.urls.i18n import i18n_patterns
 from rest_framework import routers
+from django.conf.urls.static import static
+from ZeonCharity import settings
 
 router = routers.DefaultRouter()
 router.register(r'categories', views.CategoryViewSet)
@@ -29,6 +31,7 @@ router.register(r'cards', views.CardViewSet)
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('api-reg/', APIUserRegistration.as_view()),
+    path('api-login/', APIUserLogin.as_view()),
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
