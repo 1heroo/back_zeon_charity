@@ -5,7 +5,7 @@ from .serializers import *
 from .services import stats, stats_proba
 from rest_framework.decorators import action
 from hashlib import md5
-
+from user.serializers import RegUserSerializer
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -193,3 +193,9 @@ class paymentHandler(generics.CreateAPIView):
             donation_amnt=pg_amount
         )
         return Response({'response': post_url}) 
+
+class SearchModelView(viewsets.ModelViewSet):
+    queryset = MyUser.objects.all()
+    serializer_class = RegUserSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name']

@@ -45,6 +45,8 @@ urlpatterns = i18n_patterns(
     path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
     path('categories/create', views.createCategory.as_view()),
 
+    path('search/', views.SearchModelView.as_view({'get': 'list'})),
+
     path('funds/', views.FundViewSet.as_view({'get': 'list'})),
     path('funds/create', views.createFund.as_view()),
     path('funds/<int:fund_id>',
@@ -66,4 +68,4 @@ urlpatterns = i18n_patterns(
     path('stats/', views.CalculateStat.as_view()),
     path('payment/', views.paymentHandler.as_view())
     
-) + swagger
+) + swagger + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,7 @@ from datetime import datetime
 from django.utils.translation import gettext_lazy as _
 from location_field.models.plain import PlainLocationField
 from user.models import MyUser
+from parler.models import TranslatableModel, TranslatedFields
 
 
 class Category(models.Model):
