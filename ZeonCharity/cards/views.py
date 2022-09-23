@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
-
+from .services import stats, stats_proba
 from rest_framework.decorators import action
 
 
@@ -119,4 +119,9 @@ class FundCardsViewSet(viewsets.ModelViewSet):
         queryset = Card.objects.filter(fund_id=kwargs['fund_id'])
 
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)        
+        return Response(serializer.data)     
+
+
+class CalculateStat(generics.ListAPIView):
+    def get(self, request):
+        return Response({'stats': stats(), 'stats_proba': stats_proba()})

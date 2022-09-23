@@ -49,6 +49,7 @@ urlpatterns = [
     ),
     path('volunteer/<int:id>',
         views.VolunteerPageViewSet.as_view({'get': 'list'})
-    ), 
+    ),
+    path('stats/', views.CalculateStat.as_view()),
     
 ] + swagger
