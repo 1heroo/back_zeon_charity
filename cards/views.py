@@ -18,9 +18,30 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 
+# def pay(request):
+#     print 'RECEIVED REQUEST: ' + request.method
+#     if request.method == 'POST':
+#         print 'Hello'
+
+
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class createCategory(generics.CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+    def post(self, request):
+        try:
+            data = request.data
+            new_obj = Card.objects.create(**data)
+
+            new_obj.save()
+            
+            return Response({'info': 'successfuly added'})
+        except:
+            return Response({'info': 'invalid data!'})
 
 
 class FundViewSet(viewsets.ModelViewSet):
@@ -76,6 +97,22 @@ class createCard(generics.CreateAPIView):
             current_category = Category.objects.get(pk=data['category'])
             data['category'] = current_category
             new_obj = Card.objects.create(**data)
+
+            new_obj.save()
+            
+            return Response({'info': 'successfuly added'})
+        except:
+            return Response({'info': 'invalid data!'})
+
+
+class createFund(generics.CreateAPIView):
+    queryset = Fund.objects.all()
+    serializer_class = FundSerializer
+
+    def post(self, request):
+        try:
+            data = request.data
+            new_obj = Fund.objects.create(**data)
 
             new_obj.save()
             

@@ -32,25 +32,31 @@ urlpatterns = i18n_patterns(
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(
-        'card/<int:id>',
+        'cards/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
     ), 
-    path('fund/<int:id>',
+    path('cards/create', views.createCard.as_view()),
+
+    path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
+    path('categories/create', views.createCategory.as_view()),
+
+    path('funds/', views.FundViewSet.as_view({'get': 'list'})),
+    path('funds/create', views.createFund.as_view()),
+    path('funds/<int:id>',
         views.FundPageViewSet.as_view({'get': 'list'})
     ),
-    path('api-create-card/', views.createCard.as_view()),
-    path('api-create-volunteer/', views.createVolunteerProject.as_view()),
-    path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
-    path('funds/', views.FundViewSet.as_view({'get': 'list'})),
+
     path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
-    path('category_cards/<int:category_id>/<str:category>',
+    path('volunteers/create', views.createVolunteerProject.as_view()),
+    path('volunteers/<int:id>',
+        views.VolunteerPageViewSet.as_view({'get': 'list'})
+    ),
+
+    path('cards/category/<int:category_id>/',
         views.CategoryCardsViewSet.as_view({'get': 'list'})
     ),
-    path('fund_cards/<int:fund_id>/<str:fund>',
+    path('cards/fund/<int:fund_id>/',
         views.FundCardsViewSet.as_view({'get': 'list'})
-    ),
-    path('volunteer/<int:id>',
-        views.VolunteerPageViewSet.as_view({'get': 'list'})
     ),
     path('stats/', views.CalculateStat.as_view()),
     
