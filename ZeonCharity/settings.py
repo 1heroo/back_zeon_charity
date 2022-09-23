@@ -182,3 +182,7 @@ LOCATION_FIELD = {
     'provider.google.api_libraries': '',
     'provider.google.map.type': 'ROADMAP',
 }
+
+# auth conf
+AUTHENTICATION_BACKENDS = ['user.models.EmailBackend']
+AUTH_USER_MODEL = 'user.MyUser'

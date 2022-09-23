@@ -31,6 +31,8 @@ urlpatterns = i18n_patterns(
     path('api-reg/', APIUserRegistration.as_view()),
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    
+    path('cards/', views.CardsViewSet.as_view({'get': 'list'})),
     path(
         'cards/<int:card_id>',
         views.CardViewSet.as_view({'get': 'list'})
