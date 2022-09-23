@@ -82,7 +82,7 @@ LOCALE_PATHS = [
 
 ROOT_URLCONF = 'ZeonCharity.urls'
 
-CORS_ALLOW_ALL_ORIGINS: True
+CORS_ALLOW_ALL_ORIGINS = True
  
 TEMPLATES = [
     {
