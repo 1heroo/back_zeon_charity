@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework import generics
 from .models import MyUser
 from rest_framework.response import Response
-from .serializers import RegUserSerializer
+from .serializers import RegUserSerializer, LoginSerializer
 from django.db.utils import IntegrityError
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 
 
 class APIUserRegistration(generics.CreateAPIView):
@@ -29,4 +29,20 @@ class APIUserRegistration(generics.CreateAPIView):
         except IntegrityError:
             return Response({'output data': "User '{}' already exists".format(data['username'])})
 
+
+class APIUserLogin(generics.CreateAPIView):
+    queryset = MyUser.objects.all()
+    serializer_class = LoginSerializer
+
+    def post(self, request):
+        
+        data = request.data
+        try:
+            user = MyUser.objects.get(email=data['email'])
+            print(user)
+            print(user.password)
+
+            return Response({'info': serializer.data}) if check_password(data['password'], user.password) else Response({'info': 'User not found'})
+        except:
+            return Response({'info': 'User not found'})
         

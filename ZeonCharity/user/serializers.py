@@ -10,3 +10,9 @@ class RegUserSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=128)
     email = serializers.EmailField()
     phone_number = serializers.IntegerField()
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(max_length=128)
+    

@@ -29,6 +29,7 @@ router.register(r'cards', views.CardViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-reg/', APIUserRegistration.as_view()),
+    path('api-login/', APIUserLogin.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('card/<int:id>',
         views.CardViewSet.as_view({'get': 'list'})
@@ -50,7 +51,7 @@ urlpatterns = [
     path('volunteer/<int:id>',
         views.VolunteerPageViewSet.as_view({'get': 'list'})
     ),
-    # path('stats/', views.CalculateStat.as_view()),
+    path('stats/', views.CalculateStat.as_view()),
     path('payment/', views.paymentHandler.as_view())
     
 ] + swagger
