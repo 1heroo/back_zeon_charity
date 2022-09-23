@@ -59,7 +59,7 @@ class VolunteerPageViewSet(viewsets.ModelViewSet):
     serializer_class = VolunteerSerializer
 
     def list(self, request, *args, **kwargs):
-        queryset = Volunteer.objects.filter(id=kwargs['id'])
+        queryset = Volunteer.objects.filter(id=kwargs['volunteer_id'])
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -70,7 +70,7 @@ class FundPageViewSet(viewsets.ModelViewSet):
     serializer_class = FundSerializer
 
     def list(self, request, *args, **kwargs):
-        queryset = Fund.objects.filter(id=kwargs['id'])
+        queryset = Fund.objects.filter(id=kwargs['fund_id'])
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -82,7 +82,7 @@ class CardViewSet(viewsets.ModelViewSet):
     serializer_class = CardSerializer
 
     def list(self, request, *args, **kwargs):
-        queryset = Card.objects.filter(id=kwargs['id'])
+        queryset = Card.objects.filter(id=kwargs['card_id'])
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

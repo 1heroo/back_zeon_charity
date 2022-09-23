@@ -32,7 +32,7 @@ urlpatterns = i18n_patterns(
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(
-        'cards/<int:id>',
+        'cards/<int:card_id>',
         views.CardViewSet.as_view({'get': 'list'})
     ), 
     path('cards/create', views.createCard.as_view()),
@@ -42,13 +42,13 @@ urlpatterns = i18n_patterns(
 
     path('funds/', views.FundViewSet.as_view({'get': 'list'})),
     path('funds/create', views.createFund.as_view()),
-    path('funds/<int:id>',
+    path('funds/<int:fund_id>',
         views.FundPageViewSet.as_view({'get': 'list'})
     ),
 
     path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
     path('volunteers/create', views.createVolunteerProject.as_view()),
-    path('volunteers/<int:id>',
+    path('volunteers/<int:volunteer_id>',
         views.VolunteerPageViewSet.as_view({'get': 'list'})
     ),
 
