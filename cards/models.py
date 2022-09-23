@@ -165,7 +165,7 @@ class Volunteer(models.Model):
     responsibility = models.TextField(_('responsibility'), db_column='responsibility', max_length=1000, blank=False)
     requirements = models.TextField(_('requirements'), db_column='requirements', max_length=1000, blank=False)
 
-    email = models.
+    phone_number = models.IntegerField(_('phone number'), default=555)
 
     class Meta:
         db_table = 'volunteer'

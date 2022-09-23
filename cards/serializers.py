@@ -42,7 +42,8 @@ class VolunteerSerializer(serializers.ModelSerializer):
             'start_dt',
             'end_dt',
             'responsibility',
-            'requirements'
+            'requirements',
+            'phone_number'
         )
 
 
