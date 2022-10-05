@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend
+# from django_filters.rest_framework import DjangoFilterBackend
 from django.core.paginator import Paginator
 
 from rest_framework.decorators import api_view
@@ -44,42 +44,9 @@ class createCategory(generics.CreateAPIView):
             return Response({'info': 'invalid data!'})
 
 
-class FundViewSet(viewsets.ModelViewSet):
-    queryset = Fund.objects.all()
-    serializer_class = FundSerializer
-
-
-class VolunteerViewSet(viewsets.ModelViewSet):
-    queryset = Volunteer.objects.all()
-    serializer_class = VolunteerSerializer
-
-
-class VolunteerPageViewSet(viewsets.ModelViewSet):
-    queryset = Volunteer.objects.all()
-    serializer_class = VolunteerSerializer
-
-    def list(self, request, *args, **kwargs):
-        queryset = Volunteer.objects.filter(id=kwargs['volunteer_id'])
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-class FundPageViewSet(viewsets.ModelViewSet):
-    queryset = Fund.objects.all()
-    serializer_class = FundSerializer
-
-    def list(self, request, *args, **kwargs):
-        queryset = Fund.objects.filter(id=kwargs['fund_id'])
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-
-class CardViewSet(viewsets.ModelViewSet):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
+class FundraisingCardViewSet(viewsets.ModelViewSet):
+    queryset = FundraisingCard.objects.all()
+    serializer_class = FundraisingCardSerializer
 
     def list(self, request, *args, **kwargs):
         queryset = Card.objects.filter(id=kwargs['card_id'])
@@ -87,13 +54,13 @@ class CardViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-class CardsViewSet(viewsets.ModelViewSet):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
+class FundraisingCardsViewSet(viewsets.ModelViewSet):
+    queryset = FundraisingCard.objects.all()
+    serializer_class = FundraisingCardSerializer
 
-class createCard(generics.CreateAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
+class createFundraisingCard(generics.CreateAPIView):
+    queryset = FundraisingCard.objects.all()
+    serializer_class = FundraisingCardSerializer
 
     def post(self, request):
         try:
@@ -109,58 +76,16 @@ class createCard(generics.CreateAPIView):
             return Response({'info': 'invalid data!'})
 
 
-class createFund(generics.CreateAPIView):
-    queryset = Fund.objects.all()
-    serializer_class = FundSerializer
-
-    def post(self, request):
-        try:
-            data = request.data
-            new_obj = Fund.objects.create(**data)
-
-            new_obj.save()
-            
-            return Response({'info': 'successfuly added'})
-        except:
-            return Response({'info': 'invalid data!'})
-
-
-class createVolunteerProject(generics.CreateAPIView):
-    queryset = Volunteer.objects.all()
-    serializer_class = VolunteerSerializer
-
-    def post(self, request):
-        try:
-            data = request.data
-            new_obj = Card.objects.create(**data)
-
-            new_obj.save()
-            
-            return Response({'info': 'successfuly added'})
-        except:
-            return Response({'info': 'invalid data!'})
-
-
 class CategoryCardsViewSet(viewsets.ModelViewSet):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
+    queryset = FundraisingCard.objects.all()
+    serializer_class = FundraisingCardSerializer
 
     def list(self, request, *args, **kwargs):
         queryset = Card.objects.filter(category_id=kwargs['category_id'])
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
-
-class FundCardsViewSet(viewsets.ModelViewSet):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializer
-
-    def list(self, request, *args, **kwargs):
-        queryset = Card.objects.filter(fund_id=kwargs['fund_id'])
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)     
+ 
 
 
 class CalculateStat(generics.ListAPIView):

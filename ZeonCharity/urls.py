@@ -25,7 +25,7 @@ from ZeonCharity import settings
 
 router = routers.DefaultRouter()
 router.register(r'categories', views.CategoryViewSet)
-router.register(r'cards', views.CardViewSet)
+router.register(r'cards', views.FundraisingCardViewSet)
 
 
 urlpatterns = i18n_patterns(
@@ -35,36 +35,36 @@ urlpatterns = i18n_patterns(
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
-    path('cards/', views.CardsViewSet.as_view({'get': 'list'})),
+    path('cards/', views.FundraisingCardsViewSet.as_view({'get': 'list'})),
     path(
         'cards/<int:card_id>',
-        views.CardViewSet.as_view({'get': 'list'})
+        views.FundraisingCardViewSet.as_view({'get': 'list'})
     ), 
-    path('cards/create', views.createCard.as_view()),
+    path('cards/create', views.createFundraisingCard.as_view()),
 
     path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
     path('categories/create', views.createCategory.as_view()),
 
     path('search/', views.SearchModelView.as_view({'get': 'list'})),
 
-    path('funds/', views.FundViewSet.as_view({'get': 'list'})),
-    path('funds/create', views.createFund.as_view()),
-    path('funds/<int:fund_id>',
-        views.FundPageViewSet.as_view({'get': 'list'})
-    ),
+    # path('funds/', views.FundViewSet.as_view({'get': 'list'})),
+    # path('funds/create', views.createFund.as_view()),
+    # path('funds/<int:fund_id>',
+    #     views.FundPageViewSet.as_view({'get': 'list'})
+    # ),
 
-    path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
-    path('volunteers/create', views.createVolunteerProject.as_view()),
-    path('volunteers/<int:volunteer_id>',
-        views.VolunteerPageViewSet.as_view({'get': 'list'})
-    ),
+    # path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
+    # path('volunteers/create', views.createVolunteerProject.as_view()),
+    # path('volunteers/<int:volunteer_id>',
+    #     views.VolunteerPageViewSet.as_view({'get': 'list'})
+    # ),
 
     path('cards/category/<int:category_id>/',
         views.CategoryCardsViewSet.as_view({'get': 'list'})
     ),
-    path('cards/fund/<int:fund_id>/',
-        views.FundCardsViewSet.as_view({'get': 'list'})
-    ),
+    # path('cards/fund/<int:fund_id>/',
+    #     views.FundCardsViewSet.as_view({'get': 'list'})
+    # ),
     path('stats/', views.CalculateStat.as_view()),
     path('payment/', views.paymentHandler.as_view())
     

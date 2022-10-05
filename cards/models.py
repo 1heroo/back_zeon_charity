@@ -1,8 +1,9 @@
 from django.db import models
-from datetime import datetime
+from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 from location_field.models.plain import PlainLocationField
 from user.models import MyUser
+from django.utils import timezone
 from parler.models import TranslatableModel, TranslatedFields
 
 
@@ -19,33 +20,7 @@ class Category(models.Model):
         return self.title
 
 
-class Fund(models.Model):
-    title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
-    description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
-    photo = models.ImageField(_('photo'), null=True, blank=True, upload_to='images/')
-
-    @property
-    def total_raised(self):
-        dontations_for_funds = self.funds.all()
-        total_raised = sum([item.total for item in dontations_for_funds])
-        return total_raised
-
-    @property
-    def total_helpers(self):
-        dontations_for_funds = self.funds.all()
-        total_helpers = sum([item.helpers_amnt for item in dontations_for_funds])
-        return total_helpers
-    
-    class Meta:
-        db_table = 'fund'
-        verbose_name = _('Fund')
-        verbose_name_plural = _('Funds')
-
-    def __str__(self):
-        return self.title
-
-
-class Card(models.Model):
+class FundraisingCard(models.Model):
     title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
     category = models.ForeignKey(
         verbose_name=_('category'),
@@ -56,25 +31,32 @@ class Card(models.Model):
         null=True
     )
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
-    fund = models.ForeignKey(
-        verbose_name=_('fund'),
-        to=Fund,
-        related_name='funds',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
     target_amnt = models.FloatField(_('target_amnt'), db_column='target_amnt',blank=False, default=0)
-    total_amnt = models.FloatField(_('total_amnt'), db_column='total_amnt',blank=False, default=0)
-    photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/')
+    # photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/')
     deadline = models.DateTimeField(
         _('deadline'), 
         db_column='deadline',
         blank=True,
         null=True
     )
-    is_urgent = models.BooleanField(default=False)
+    contacts = models.TextField(_('contacts'), db_column='contacts', max_length=500, blank=True, null=True)
+
     is_approved = models.BooleanField(default=False)
+
+    @property
+    def is_active(self):
+        if timezone.now() < self.deadline:
+            return True
+        return False
+
+    @property
+    def is_urgent(self):
+        if self.is_active == False:
+            return False
+
+        if timezone.now() > self.deadline-timedelta(days=3):
+            return True
+        return False
 
     @property
     def total(self):
@@ -82,6 +64,7 @@ class Card(models.Model):
         total = sum([item.donation_amnt for item in donations])
         return total
 
+    # TO FIX
     @property
     def helpers_amnt(self):
         donations = self.donations.all()
@@ -89,9 +72,9 @@ class Card(models.Model):
         return helpers_amnt
 
     class Meta:
-        db_table = 'card'
-        verbose_name = _('Card')
-        verbose_name_plural = _('Cards')
+        db_table = 'fundraising_card'
+        verbose_name = _('Fundraising Card')
+        verbose_name_plural = _('Fundraising Cards')
 
     def __str__(self):
         return self.title
@@ -101,7 +84,7 @@ class CardImage(models.Model):
     photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/')
     card = models.ForeignKey(
         verbose_name=_('card'),
-        to=Card,
+        to=FundraisingCard,
         related_name='card_images',
         on_delete=models.CASCADE
     )
@@ -114,6 +97,14 @@ class CardImage(models.Model):
         verbose_name = _('Card Image')
         verbose_name_plural = _('Card Images')
 
+class CardDocuments(models.Model):
+    document = models.FileField(upload_to='documents/')
+    card = models.ForeignKey(
+        verbose_name=_('card'),
+        to=FundraisingCard, 
+        related_name='card_documents',
+        on_delete=models.CASCADE
+    )
 
 class Donations(models.Model):
     user = models.ForeignKey(
@@ -125,7 +116,7 @@ class Donations(models.Model):
     )
     card = models.ForeignKey(
         verbose_name=_('card'),
-        to=Card,
+        to=FundraisingCard,
         related_name='donations',
         on_delete=models.SET_NULL,
         null=True, blank=True
@@ -133,23 +124,22 @@ class Donations(models.Model):
     donation_amnt = models.FloatField(_('donation_amnt'), db_column='donation_amnt',blank=False, default=0)
     payment_dt = models.DateTimeField(
         verbose_name=_('payment_dt'),
-        default=datetime.now(),
+        default=timezone.now(),
         db_column='payment_dt',
         blank=True,
         null=True
     )
-    region = models.CharField(_('region'), db_column='region', max_length=100, blank=True)
 
     class Meta:
         db_table = 'donation'
         verbose_name = _('Donation')
         verbose_name_plural = _('Donations')
 
-class Volunteer(models.Model):
+class VolunteeringCard(models.Model):
     title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
-    photo = models.ImageField(_('photo'), null=True, blank=True, upload_to='images/')
-    city = models.CharField(_('city'), max_length=255)
+    # photo = models.ImageField(_('photo'), null=True, blank=True, upload_to='images/')
+    # city = models.CharField(_('city'), max_length=255)
     location = PlainLocationField(verbose_name=_('location'), based_fields=['city'], zoom=7)
     start_dt = models.DateTimeField(
         _('start_dt'), 
@@ -166,12 +156,18 @@ class Volunteer(models.Model):
     responsibility = models.TextField(_('responsibility'), db_column='responsibility', max_length=1000, blank=False)
     requirements = models.TextField(_('requirements'), db_column='requirements', max_length=1000, blank=False)
 
-    phone_number = models.IntegerField(_('phone number'), default=555)
+    contacts = models.TextField(_('contacts'), db_column='contacts', max_length=500, blank=False, null=False)
+
+    @property
+    def is_active(self):
+        if timezone.now() < self.end_dt:
+            return True
+        return False
 
     class Meta:
-        db_table = 'volunteer'
-        verbose_name = _('Volunteer')
-        verbose_name_plural = _('Volunteers')
+        db_table = 'volunteering_card'
+        verbose_name = _('Volunteering Card')
+        verbose_name_plural = _('Volunteering Cards')
 
     def __str__(self):
         return self.title
