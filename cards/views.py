@@ -2,7 +2,6 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
-from .services import stats, stats_proba
 from rest_framework.decorators import action
 from hashlib import md5
 from user.serializers import RegUserSerializer
