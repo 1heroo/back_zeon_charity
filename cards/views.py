@@ -5,7 +5,7 @@ from .serializers import *
 from rest_framework.decorators import action
 from hashlib import md5
 from user.serializers import RegUserSerializer
-
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -80,6 +80,7 @@ class FundPageViewSet(viewsets.ModelViewSet):
 class CardViewSet(viewsets.ModelViewSet):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+    permission_classes = ()
 
     def list(self, request, *args, **kwargs):
         queryset = Card.objects.filter(id=kwargs['card_id'])
@@ -90,6 +91,7 @@ class CardViewSet(viewsets.ModelViewSet):
 class CardsViewSet(viewsets.ModelViewSet):
     queryset = Card.objects.all()
     serializer_class = CardSerializer
+    permission_classes = (IsAuthenticated,)
 
 class createCard(generics.CreateAPIView):
     queryset = Card.objects.all()

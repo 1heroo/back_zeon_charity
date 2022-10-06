@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from user.views import *
 from .yasg import urlpatterns as swagger
 from cards import views
 from django.conf.urls.i18n import i18n_patterns
@@ -30,8 +29,7 @@ router.register(r'cards', views.CardViewSet)
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('api-reg/', APIUserRegistration.as_view()),
-    path('api-login/', APIUserLogin.as_view()),
+    path('user-auth/', include('user.urls')),
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
