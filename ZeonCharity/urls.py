@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from user.views import *
 from .yasg import urlpatterns as swagger
 from cards import views
 from django.conf.urls.i18n import i18n_patterns
@@ -30,8 +29,7 @@ router.register(r'cards', views.FundraisingCardViewSet)
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('api-reg/', APIUserRegistration.as_view()),
-    path('api-login/', APIUserLogin.as_view()),
+    path('user-auth/', include('user.urls')),
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     
@@ -47,24 +45,9 @@ urlpatterns = i18n_patterns(
 
     path('search/', views.SearchModelView.as_view({'get': 'list'})),
 
-    # path('funds/', views.FundViewSet.as_view({'get': 'list'})),
-    # path('funds/create', views.createFund.as_view()),
-    # path('funds/<int:fund_id>',
-    #     views.FundPageViewSet.as_view({'get': 'list'})
-    # ),
-
-    # path('volunteers/', views.VolunteerViewSet.as_view({'get': 'list'})),
-    # path('volunteers/create', views.createVolunteerProject.as_view()),
-    # path('volunteers/<int:volunteer_id>',
-    #     views.VolunteerPageViewSet.as_view({'get': 'list'})
-    # ),
-
     path('cards/category/<int:category_id>/',
         views.CategoryCardsViewSet.as_view({'get': 'list'})
     ),
-    # path('cards/fund/<int:fund_id>/',
-    #     views.FundCardsViewSet.as_view({'get': 'list'})
-    # ),
     path('stats/', views.CalculateStat.as_view()),
     path('payment/', views.paymentHandler.as_view())
     

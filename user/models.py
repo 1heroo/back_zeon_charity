@@ -1,4 +1,3 @@
-from re import T
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
@@ -6,24 +5,22 @@ from django.utils.translation import gettext_lazy as _
 
 
 class MyUser(AbstractUser, PermissionsMixin):
-    phone_number = models.IntegerField(_('phone number'), default=555)
+    username = models.CharField(max_length=50, unique=False)
+    phone_number = models.IntegerField(
+        _('phone number'),
+        default=555
+    )
+    email = models.EmailField(
+        _("email address"),
+        unique=True
+    )
+    password = models.CharField(
+        _("password"),
+        blank=True,max_length=120,
+    )
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     def __str__(self) -> str:
         return f'{super().first_name} {super().last_name}'
-
-
-from django.contrib.auth import get_user_model
-from user.models import MyUser
-from django.contrib.auth.backends import ModelBackend
-
-class EmailBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, **kwargs):
-        UserModel = get_user_model()
-        try:
-            user = UserModel.objects.get(email=username)
-        except UserModel.DoesNotExist:
-            return None
-        else:
-            if user.check_password(password):
-                return user
-        return None

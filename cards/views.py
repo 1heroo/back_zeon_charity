@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from hashlib import md5
 from user.serializers import RegUserSerializer
 
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -47,6 +48,7 @@ class createCategory(generics.CreateAPIView):
 class FundraisingCardViewSet(viewsets.ModelViewSet):
     queryset = FundraisingCard.objects.all()
     serializer_class = FundraisingCardSerializer
+    permission_classes = ()
 
     def list(self, request, *args, **kwargs):
         queryset = Card.objects.filter(id=kwargs['card_id'])
@@ -57,6 +59,7 @@ class FundraisingCardViewSet(viewsets.ModelViewSet):
 class FundraisingCardsViewSet(viewsets.ModelViewSet):
     queryset = FundraisingCard.objects.all()
     serializer_class = FundraisingCardSerializer
+    permission_classes = (IsAuthenticated,)
 
 class createFundraisingCard(generics.CreateAPIView):
     queryset = FundraisingCard.objects.all()
