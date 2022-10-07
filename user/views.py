@@ -1,7 +1,7 @@
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from .models import MyUser
 from rest_framework.response import Response
-from .serializers import RegUserSerializer, MyTokenObtainPairSerializer
+from .serializers import RegUserSerializer, MyTokenObtainPairSerializer, ResetPasswordSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
@@ -15,6 +15,20 @@ class APIUserRegistration(generics.GenericAPIView):
             serializer.save()
             return Response({'Response': 'Created new User'}, status=status.HTTP_201_CREATED)
         return Response('asd', status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResetPassword(generics.GenericAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = ResetPasswordSerializer
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        new_password = serializer.data['password']
+        user = request.user
+        user.set_password(new_password)
+        user.save()
+        return Response(status=status.HTTP_202_ACCEPTED)
 
 
 class ActivationView(generics.GenericAPIView):

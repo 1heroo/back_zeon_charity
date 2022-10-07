@@ -192,6 +192,15 @@ REST_FRAMEWORK = {
 
 }
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'

@@ -4,12 +4,14 @@ from django.core.mail import send_mail
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.urls import reverse
+from django.core.validators import RegexValidator
+import re
 
 
 class RegUserSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    first_name = serializers.CharField(max_length=55)
-    last_name = serializers.CharField(max_length=55)
+    first_name = serializers.CharField(max_length=100)
+    last_name = serializers.CharField(max_length=100)
     password = serializers.CharField(max_length=100)
     phone_number = serializers.IntegerField()
 
@@ -57,3 +59,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['phone_number'] = self.user.phone_number
         data['password'] = attrs['password']
         return data
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        max_length=100,
+        validators=(RegexValidator(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"),)
+    )
+

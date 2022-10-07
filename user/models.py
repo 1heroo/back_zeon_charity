@@ -9,7 +9,8 @@ class MyUser(AbstractUser, PermissionsMixin):
     code = models.CharField(max_length=10, blank=True)
     phone_number = models.IntegerField(
         _('phone number'),
-        default=555
+        default=555,
+        blank=True
     )
     email = models.EmailField(
         _("email address"),
