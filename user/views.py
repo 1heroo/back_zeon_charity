@@ -1,8 +1,13 @@
 from rest_framework import generics, status, permissions
 from .models import MyUser
 from rest_framework.response import Response
-from .serializers import RegUserSerializer, MyTokenObtainPairSerializer, ResetPasswordSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import (
+    RegUserSerializer,
+    MyTokenObtainPairSerializer,
+    ResetPasswordSerializer,
+    # ForgetPasswordSerializer
+)
 
 
 class APIUserRegistration(generics.GenericAPIView):
@@ -24,11 +29,19 @@ class ResetPassword(generics.GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        new_password = serializer.data['password']
+        new_password = serializer.data['new_password']
         user = request.user
         user.set_password(new_password)
         user.save()
-        return Response(status=status.HTTP_202_ACCEPTED)
+        return Response('Reset successfully', status=status.HTTP_202_ACCEPTED)
+
+
+# class ForgetPassword(generics.GenericAPIView):
+#     serializer_class = ForgetPasswordSerializer
+#
+#     def post(self, request):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exeption=True)
 
 
 class ActivationView(generics.GenericAPIView):

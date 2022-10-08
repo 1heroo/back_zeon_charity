@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.urls import reverse
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, EmailValidator
 import re
 
 
@@ -62,8 +62,17 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class ResetPasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(
+    new_password = serializers.CharField(
         max_length=100,
         validators=(RegexValidator(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"),)
     )
+
+
+# class ForgetPasswordSerializer(serializers.Serializer):
+#     email = serializers.CharField(
+#         max_length=100,
+#         validators=(EmailValidator, )
+#     )
+
+
 
