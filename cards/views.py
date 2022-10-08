@@ -45,9 +45,47 @@ class createCategory(generics.CreateAPIView):
             return Response({'info': 'invalid data!'})
 
 
+class FundViewSet(viewsets.ModelViewSet):
+    queryset = Fund.objects.all()
+    serializer_class = FundSerializer
+
+
+class VolunteerViewSet(viewsets.ModelViewSet):
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
+
+
+class VolunteerPageViewSet(viewsets.ModelViewSet):
+    queryset = Volunteer.objects.all()
+    serializer_class = VolunteerSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = Volunteer.objects.filter(id=kwargs['volunteer_id'])
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class FundPageViewSet(viewsets.ModelViewSet):
+    queryset = Fund.objects.all()
+    serializer_class = FundSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = Fund.objects.filter(id=kwargs['fund_id'])
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+class CardViewSet(viewsets.ModelViewSet):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializer
+
 class FundraisingCardViewSet(viewsets.ModelViewSet):
     queryset = FundraisingCard.objects.all()
     serializer_class = FundraisingCardSerializer
+
     permission_classes = ()
 
     def list(self, request, *args, **kwargs):
@@ -56,10 +94,12 @@ class FundraisingCardViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+
 class FundraisingCardsViewSet(viewsets.ModelViewSet):
     queryset = FundraisingCard.objects.all()
     serializer_class = FundraisingCardSerializer
     permission_classes = (IsAuthenticated,)
+ 
 
 class createFundraisingCard(generics.CreateAPIView):
     queryset = FundraisingCard.objects.all()
