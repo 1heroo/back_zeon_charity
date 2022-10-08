@@ -1,3 +1,4 @@
+
 from hashlib import blake2b
 from .models import MyUser
 from django.core.mail import send_mail
@@ -60,7 +61,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['password'] = attrs['password']
         return data
 
-
 class ResetPasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(
         max_length=100,
@@ -73,6 +73,7 @@ class ResetPasswordSerializer(serializers.Serializer):
 #         max_length=100,
 #         validators=(EmailValidator, )
 #     )
+
 
 
 

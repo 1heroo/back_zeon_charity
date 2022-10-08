@@ -17,7 +17,6 @@ import django_heroku
 from datetime import timedelta
 from decouple import config
 
-
 LANGUAGES = (
     ('en', _('English')),
     ('ru', _('Russian'))
@@ -190,10 +189,10 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     )
 
 }
-
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Bearer': {
@@ -202,7 +201,7 @@ SWAGGER_SETTINGS = {
             'in': 'header'
         }
     }
-}
+
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'

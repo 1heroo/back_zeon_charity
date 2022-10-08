@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 
 
 class MyUser(AbstractUser, PermissionsMixin):
+
     username = models.CharField(max_length=50, unique=False, blank=True)
     code = models.CharField(max_length=10, blank=True)
     phone_number = models.IntegerField(
@@ -32,4 +33,3 @@ class MyUser(AbstractUser, PermissionsMixin):
         self.code = code
         self.save()
         return code
-
