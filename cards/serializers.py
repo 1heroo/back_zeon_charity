@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import *
 
+
 class DonationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Donations
         fields = ('user', 'card', 'donation_amnt')
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,51 +17,43 @@ class CategorySerializer(serializers.ModelSerializer):
 class CardImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = CardImage
-        fields = ['photo',]
+        fields = ['photo', ]
 
 
-class FundSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Fund
-        fields = (
-            'title',
-            'description',
-            'photo',
-            'total_raised',
-            'total_helpers'
-        )
-
-
-class VolunteerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Volunteer
-        fields = (
-            'title',
-            'description',
-            'photo',
-            'city',
-            'location',
-            'start_dt',
-            'end_dt',
-            'responsibility',
-            'requirements',
-            'phone_number'
-        )
-
-
-class CardSerializer(serializers.ModelSerializer):
+class FundraisingCardSerializer(serializers.ModelSerializer):
     card_images = CardImageSerializer(many=True, read_only=True)
+
     class Meta:
-        model = Card
+        model = FundraisingCard
         fields = (
             'title',
             'category',
             'description',
             'target_amnt',
-            'total_amnt',
             'deadline',
             'is_urgent',
+            'is_active',
             'is_approved',
             'total',
+            'contacts',
+            'card_images'
+        )
+
+
+class VolunteeringCardSerializer(serializers.ModelSerializer):
+    card_images = CardImageSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = VolunteeringCard
+        fields = (
+            'title',
+            'description',
+            'location',
+            'start_dt',
+            'end_dt',
+            'responsibility',
+            'requirements',
+            'contacts',
+            'is_active',
             'card_images'
         )
