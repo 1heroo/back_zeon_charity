@@ -6,6 +6,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from .models import MyUser
 from django.core.mail import send_mail
 from django.urls import reverse
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.core.validators import EmailValidator, RegexValidator
 from django.contrib.sites.shortcuts import get_current_site
 from decouple import config

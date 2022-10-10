@@ -36,27 +36,6 @@ class FundraisingCardAdmin(admin.ModelAdmin):
 admin.site.register(FundraisingCard, FundraisingCardAdmin)
 
 
-class VolunteeringCardAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'title',
-        'description',
-        'location',
-        'start_dt',
-        'end_dt',
-        'responsibility', 
-        'requirements',
-        'contacts',
-        'is_active'
-    )
-
-
-admin.site.register(VolunteeringCard, VolunteeringCardAdmin)
-
-
-admin.site.register(FundraisingCard, FundraisingCardAdmin)
-
-
 class VolunteeringImageInline(admin.TabularInline):
     model = VolunteeringCardImage
     extra = 0
