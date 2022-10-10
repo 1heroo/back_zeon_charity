@@ -32,7 +32,6 @@ class FundraisingCard(models.Model):
     )
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
     target_amnt = models.FloatField(_('target_amnt'), db_column='target_amnt',blank=False, default=0)
-    # photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/')
     deadline = models.DateTimeField(
         _('deadline'), 
         db_column='deadline',
@@ -80,32 +79,6 @@ class FundraisingCard(models.Model):
         return self.title
 
 
-class CardImage(models.Model):
-    photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/')
-    card = models.ForeignKey(
-        verbose_name=_('card'),
-        to=FundraisingCard,
-        related_name='card_images',
-        on_delete=models.CASCADE
-    )
-
-    def __str__(self):
-        return str(self.photo)
-
-    class Meta:
-        db_table = 'card_images'
-        verbose_name = _('Card Image')
-        verbose_name_plural = _('Card Images')
-
-class CardDocuments(models.Model):
-    document = models.FileField(upload_to='documents/')
-    card = models.ForeignKey(
-        verbose_name=_('card'),
-        to=FundraisingCard, 
-        related_name='card_documents',
-        on_delete=models.CASCADE
-    )
-
 class Donations(models.Model):
     user = models.ForeignKey(
         verbose_name=_('user'),
@@ -139,7 +112,6 @@ class Donations(models.Model):
 class VolunteeringCard(models.Model):
     title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
-    location = PlainLocationField(verbose_name=_('location'), based_fields=['city'], zoom=7)
     start_dt = models.DateTimeField(
         _('start_dt'), 
         db_column='start_dt',
@@ -170,3 +142,75 @@ class VolunteeringCard(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class FundraisingCardImage(models.Model):
+    photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/fundraising')
+    card = models.ForeignKey(
+        verbose_name=_('card'),
+        to=FundraisingCard,
+        related_name='fund_card_images',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.photo)
+
+    class Meta:
+        db_table = 'fun_card_images'
+        verbose_name = _('Fundraising Card Image')
+        verbose_name_plural = _('Fundraising Card Images')
+
+
+class VolunteeringCardImage(models.Model):
+    photo = models.ImageField(_('image'), null=True, blank=True, upload_to='images/volunteering/')
+    card = models.ForeignKey(
+        verbose_name=_('card'),
+        to=VolunteeringCard,
+        related_name='vol_card_images',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.photo)
+
+    class Meta:
+        db_table = 'vol_card_images'
+        verbose_name = _('Volunteering Card Image')
+        verbose_name_plural = _('Volunteering Card Images')
+
+
+class VolunteeringCardDocument(models.Model):
+    document = models.FileField(upload_to='documents/')
+    card = models.ForeignKey(
+        verbose_name=_('card'),
+        to=VolunteeringCard,
+        related_name='card_documents',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.document)
+
+    class Meta:
+        db_table = 'card_docs'
+        verbose_name = _('Volunteering Card Document')
+        verbose_name_plural = _('Volunteering Card Documents')
+
+
+class VolunteeringCardLocation(models.Model):
+    location = PlainLocationField(verbose_name=_('location'), based_fields=['city'], zoom=7)
+    card = models.ForeignKey(
+        verbose_name=_('card'),
+        to=VolunteeringCard,
+        related_name='card_images',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.location)
+
+    class Meta:
+        db_table = 'card_locations'
+        verbose_name = _('Volunteering Card Location')
+        verbose_name_plural = _('Volunteering Card Locations')

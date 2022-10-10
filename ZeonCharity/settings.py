@@ -204,12 +204,13 @@ SWAGGER_SETTINGS = {
     }
 }
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# AWS_S3_ACCESS_KEY_ID = 'AKIAR6VLE4O2FFRI3PHU'
-# AWS_S3_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'zeoncharitybucket'
+AWS_S3_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET']
+AWS_QUERYSTRING_AUTH = False
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
