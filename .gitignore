@@ -32,7 +32,7 @@ wheels/
 *.spec 
 
 # Environments 
-.env 
+
 .venv 
 env/ 
 venv/ 

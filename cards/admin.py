@@ -5,14 +5,15 @@ from .models import *
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'photo')
 
+
 admin.site.register(Category, CategoryAdmin)
 
 
-class CardInline(admin.TabularInline):
-    model = CardImage
+class FundraisingImageInline(admin.TabularInline):
+    model = FundraisingCardImage
     extra = 0
     max_num = 8
- 
+
 
 class FundraisingCardAdmin(admin.ModelAdmin):
     list_display = (
@@ -23,15 +24,17 @@ class FundraisingCardAdmin(admin.ModelAdmin):
         'target_amnt',
         'total',
         'deadline',
-        'is_urgent', 
+        'is_urgent',
         'is_approved',
         'is_active'
     )
     inlines = [
-        CardInline,
+        FundraisingImageInline,
     ]
 
+
 admin.site.register(FundraisingCard, FundraisingCardAdmin)
+
 
 class VolunteeringCardAdmin(admin.ModelAdmin):
     list_display = (
@@ -47,6 +50,51 @@ class VolunteeringCardAdmin(admin.ModelAdmin):
         'is_active'
     )
 
+
+admin.site.register(VolunteeringCard, VolunteeringCardAdmin)
+
+
+admin.site.register(FundraisingCard, FundraisingCardAdmin)
+
+
+class VolunteeringImageInline(admin.TabularInline):
+    model = VolunteeringCardImage
+    extra = 0
+    max_num = 8
+
+
+class VolunteeringDocumentInline(admin.TabularInline):
+    model = VolunteeringCardDocument
+    extra = 0
+    max_num = 10
+
+
+class VolunteeringLocationInline(admin.TabularInline):
+    model = VolunteeringCardLocation
+    extra = 0
+    max_num = 10
+
+
+class VolunteeringCardAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'title',
+        'description',
+        'start_dt',
+        'end_dt',
+        'responsibility',
+        'requirements',
+        'contacts',
+        'is_active'
+
+    )
+    inlines = [
+        VolunteeringImageInline,
+        VolunteeringDocumentInline,
+        VolunteeringLocationInline
+    ]
+
+
 admin.site.register(VolunteeringCard, VolunteeringCardAdmin)
 
 
@@ -57,5 +105,6 @@ class DonationsAdmin(admin.ModelAdmin):
         'donation_amnt',
         'payment_dt',
     )
+
 
 admin.site.register(Donations, DonationsAdmin)

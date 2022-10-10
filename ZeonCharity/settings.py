@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-6l$+py_km=&echz%&8v6thw60v(mf6#dvajahgc#2u*7n5&@mi'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -193,6 +193,7 @@ REST_FRAMEWORK = {
     )
 
 }
+
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Bearer': {
@@ -201,18 +202,20 @@ SWAGGER_SETTINGS = {
             'in': 'header'
         }
     }
+}
 
 
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-# AWS_S3_ACCESS_KEY_ID = 'AKIAR6VLE4O2FFRI3PHU'
-# AWS_S3_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'zeoncharitybucket'
+AWS_S3_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_S3_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET']
+AWS_QUERYSTRING_AUTH = False
+
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
 
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
@@ -224,8 +227,8 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
     'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
 
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=5),
 }
 
 

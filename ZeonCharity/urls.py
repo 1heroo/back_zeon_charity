@@ -18,37 +18,20 @@ from django.urls import path, include
 from .yasg import urlpatterns as swagger
 from cards import views
 from django.conf.urls.i18n import i18n_patterns
-from rest_framework import routers
 from django.conf.urls.static import static
 from ZeonCharity import settings
 
-router = routers.DefaultRouter()
-router.register(r'categories', views.CategoryViewSet)
-router.register(r'cards', views.FundraisingCardViewSet)
-
 
 urlpatterns = i18n_patterns(
+    path('', include('cards.urls')),
     path('admin/', admin.site.urls),
     path('user-auth/', include('user.urls')),
     path('rosetta/', include('rosetta.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    
-    path('cards/', views.FundraisingCardsViewSet.as_view({'get': 'list'})),
-    path(
-        'cards/<int:card_id>',
-        views.FundraisingCardViewSet.as_view({'get': 'list'})
-    ), 
-    path('cards/create', views.createFundraisingCard.as_view()),
 
-    path('categories/', views.CategoryViewSet.as_view({'get': 'list'})),
-    path('categories/create', views.createCategory.as_view()),
 
     path('search/', views.SearchModelView.as_view({'get': 'list'})),
-
-    path('cards/category/<int:category_id>/',
-        views.CategoryCardsViewSet.as_view({'get': 'list'})
-    ),
-    path('stats/', views.CalculateStat.as_view()),
+    # path('stats/', views.CalculateStat.as_view()),
     path('payment/', views.paymentHandler.as_view())
-    
 ) + swagger + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
