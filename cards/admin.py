@@ -61,8 +61,6 @@ class VolunteeringCardAdmin(admin.ModelAdmin):
         'description',
         'start_dt',
         'end_dt',
-        'responsibility',
-        'requirements',
         'contacts',
         'is_active'
 
@@ -75,7 +73,6 @@ class VolunteeringCardAdmin(admin.ModelAdmin):
 
 
 admin.site.register(VolunteeringCard, VolunteeringCardAdmin)
-
 
 class DonationsAdmin(admin.ModelAdmin):
     list_display = (

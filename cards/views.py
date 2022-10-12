@@ -43,15 +43,15 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class FundraisingCardViewSet(viewsets.ModelViewSet):
     queryset = FundraisingCard.objects.all()
     serializer_class = FundraisingCardSerializer
-    http_method_names = ['get', 'post']
-
+    http_method_names = ['get']
+    
     permission_classes = (IsAuthenticated,)
 
 
 class VolunteeringCardViewSet(viewsets.ModelViewSet):
     queryset = VolunteeringCard.objects.all()
     serializer_class = VolunteeringCardSerializer
-    http_method_names = ['get', 'post']
+    http_method_names = ['get']
     permission_classes = (IsAuthenticated,)
 
 

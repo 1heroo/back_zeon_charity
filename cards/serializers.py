@@ -38,6 +38,12 @@ class FundraisingCardSerializer(serializers.ModelSerializer):
             'contacts',
             'images'
         )
+        read_only_fields = (
+            'is_urgent',
+            'is_active',
+            'is_approved',
+            'images'
+        )
 
 
 class VolunteeringImageSerializer(serializers.ModelSerializer):
@@ -69,12 +75,15 @@ class VolunteeringCardSerializer(serializers.ModelSerializer):
         fields = (
             'title',
             'description',
-            'responsibility',
-            'requirements',
             'start_dt',
             'end_dt',
             'contacts',
             'is_active',
+            'images',
+            'documents',
+            'locations'
+        )
+        read_only_fields = (
             'images',
             'documents',
             'locations'

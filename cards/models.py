@@ -111,7 +111,7 @@ class Donations(models.Model):
 
 class VolunteeringCard(models.Model):
     title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
-    description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
+    description = models.TextField(_('description'), db_column='description', max_length=5000, blank=False)
     start_dt = models.DateTimeField(
         _('start_dt'), 
         db_column='start_dt',
@@ -124,8 +124,6 @@ class VolunteeringCard(models.Model):
         blank=True,
         null=True
     )
-    responsibility = models.TextField(_('responsibility'), db_column='responsibility', max_length=1000, blank=False)
-    requirements = models.TextField(_('requirements'), db_column='requirements', max_length=1000, blank=False)
 
     contacts = models.TextField(_('contacts'), db_column='contacts', max_length=500, blank=False, null=False)
 
