@@ -82,5 +82,5 @@ class DonationsAdmin(admin.ModelAdmin):
         'payment_dt',
     )
 
-
+admin.site.register(CardApplyModel)
 admin.site.register(Donations, DonationsAdmin)

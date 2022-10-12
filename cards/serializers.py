@@ -17,11 +17,27 @@ class CategorySerializer(serializers.ModelSerializer):
 class FundraisingImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = FundraisingCardImage
-        fields = ['photo', ]
+        fields = '__all__'
+
+    # def create(self, validated_data):
+    #     photo = validated_data.pop('image')
+    #     card = self.context.get('card')
+    #     return FundraisingCardImage.objects.create(photo=photo, card=card)
+
+
+# class FundraisingCardSerializer(serializers.Serializer):
+#     title = serializers.CharField(max_length=100)
+#     category = serializers.IntegerField()
+#     description = serializers.CharField(max_length=1000)
+#     target_amnt = serializers.IntegerField()
+#     deadline = serializers.DateField()
+#     total = serializers.IntegerField()
+#     contacts = serializers.IntegerField()
 
 
 class FundraisingCardSerializer(serializers.ModelSerializer):
-    images = FundraisingImageSerializer(many=True, read_only=True)
+    fund_card_images = FundraisingImageSerializer(many=True, read_only=True)
+    # images = serializers.ImageField(many=True)
 
     class Meta:
         model = FundraisingCard
@@ -36,15 +52,34 @@ class FundraisingCardSerializer(serializers.ModelSerializer):
             'is_approved',
             'total',
             'contacts',
-            'images'
+            'fund_card_images'
         )
+
         read_only_fields = (
             'is_urgent',
             'is_active',
             'is_approved',
-            'images'
+            'deadline',
         )
 
+        # def create(self, validated_data):
+        #     image = validated_data.pop('images')
+        #     card = FundraisingCard.objects.create(**validated_data)
+        #
+        #     image_serializer = FundraisingImageSerializer(data=image, context={'card': card})
+        #     if image_serializer.is_valid(raise_exceptions=True):
+        #         image_serializer.save()
+        #     return card
+
+        # def create(self, validated_data):
+        #     # images = self.context.get('view').request.FILES
+        #
+        #     validated_data.pop('images')
+        #     return super().create(validated_data)
+        #
+        #     # img_serializer = FundraisingImageSerializer(data=images, many=True)
+        #     print(validated_data)
+        #     return MyUser.objects.get(pk=1)
 
 class VolunteeringImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -88,3 +123,11 @@ class VolunteeringCardSerializer(serializers.ModelSerializer):
             'documents',
             'locations'
         )
+
+
+class CardApplySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CardApplyModel
+        fields = ('title', 'description', 'contacts', 'user')
+
+        read_only_fields = ('user', )

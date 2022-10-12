@@ -5,6 +5,7 @@ from .serializers import *
 from rest_framework.decorators import action
 from hashlib import md5
 from user.serializers import RegUserSerializer
+from rest_framework.parsers import FormParser, MultiPartParser
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
@@ -39,19 +40,43 @@ class CategoryViewSet(viewsets.ModelViewSet):
 #         except:
 #             return Response({'info': 'invalid data!'})
 
-
-class FundraisingCardViewSet(viewsets.ModelViewSet):
-    queryset = FundraisingCard.objects.all()
+class FundraisingCardAPIView(generics.GenericAPIView):
     serializer_class = FundraisingCardSerializer
-    http_method_names = ['get']
-    
-    permission_classes = (IsAuthenticated,)
+    parser_classes = (FormParser, MultiPartParser)
 
+    def post(self, request):
+        print(request.data)
+        return Response('asd')
+
+# class FundraisingCardViewSet(viewsets.ModelViewSet):
+#     queryset = FundraisingCard.objects.all()
+#     serializer_class = FundraisingCardSerializer
+#     parser_classes = (FormParser, MultiPartParser)
+#     # http_method_names = ['get']
+#     # permission_classes = (IsAuthenticated,)
+#
+#     def post(self, request):
+#         print(request.data)
+#         serializer = FundraisingCardSerializer(data=request.data)
+#         if serializer.is_valid():
+#             return Response('asdd')
+#         return Response('sad')
+#         # # images = request.data.pop('images')
+#         # img_serializer = FundraisingCardSerializedSerializer(data=request.data)
+#         # # data = request.data
+#         return Response({'response': 'asd'})
+#
+#     # def get_parsers(self):
+#     #     if getattr(self, 'swagger_fake_view', False):
+#     #         return []
+#     #
+#     #     return (FormParser, MultiPartParser) # super().get_parsers()
+#
 
 class VolunteeringCardViewSet(viewsets.ModelViewSet):
     queryset = VolunteeringCard.objects.all()
     serializer_class = VolunteeringCardSerializer
-    http_method_names = ['get']
+    # http_method_names = ['get']
     permission_classes = (IsAuthenticated,)
 
 
@@ -69,7 +94,6 @@ class VolunteeringCardViewSet(viewsets.ModelViewSet):
 # class CalculateStat(generics.ListAPIView):
 #     def get(self, request):
 #         return Response({'stats': stats(), 'stats_proba': stats_proba()})
-
 
 class paymentHandler(generics.CreateAPIView):
     queryset = Donations.objects.all()
@@ -102,3 +126,15 @@ class SearchModelView(viewsets.ModelViewSet):
     serializer_class = RegUserSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['first_name']
+
+
+class CardApply(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = CardApplySerializer
+
+    def post(self, request):
+        data = request.data
+        data['user'] = request.user
+        request = CardApplyModel(**data)
+        request.save()
+        return Response({'response': 'Successfully created new apply'})

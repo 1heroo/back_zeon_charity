@@ -42,10 +42,12 @@ class FundraisingCard(models.Model):
 
     is_approved = models.BooleanField(default=False)
 
+
     @property
     def is_active(self):
-        if timezone.now() < self.deadline:
-            return True
+        if self.deadline:
+            if timezone.now() < self.deadline:
+                return True
         return False
 
     @property
@@ -212,3 +214,13 @@ class VolunteeringCardLocation(models.Model):
         db_table = 'card_locations'
         verbose_name = _('Volunteering Card Location')
         verbose_name_plural = _('Volunteering Card Locations')
+
+
+class CardApplyModel(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(_('title'), max_length=100)
+    description = models.TextField(_('description'), max_length=1000)
+    contacts = models.TextField(_('contacts'), db_column='contacts', max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
