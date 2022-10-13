@@ -25,19 +25,12 @@ class FundraisingImageSerializer(serializers.ModelSerializer):
     #     return FundraisingCardImage.objects.create(photo=photo, card=card)
 
 
-# class FundraisingCardSerializer(serializers.Serializer):
-#     title = serializers.CharField(max_length=100)
-#     category = serializers.IntegerField()
-#     description = serializers.CharField(max_length=1000)
-#     target_amnt = serializers.IntegerField()
-#     deadline = serializers.DateField()
-#     total = serializers.IntegerField()
-#     contacts = serializers.IntegerField()
-
-
 class FundraisingCardSerializer(serializers.ModelSerializer):
-    fund_card_images = FundraisingImageSerializer(many=True, read_only=True)
-    # images = serializers.ImageField(many=True)
+    # images = serializers.ListField(
+    #     child=serializers.ImageField()
+    # )
+
+    images = FundraisingImageSerializer(many=True)
 
     class Meta:
         model = FundraisingCard
@@ -52,7 +45,7 @@ class FundraisingCardSerializer(serializers.ModelSerializer):
             'is_approved',
             'total',
             'contacts',
-            'fund_card_images'
+            'images'
         )
 
         read_only_fields = (
@@ -61,6 +54,37 @@ class FundraisingCardSerializer(serializers.ModelSerializer):
             'is_approved',
             'deadline',
         )
+
+        def create(self, validated_data):
+            images = validated_data.pop('fund_card_images')
+            print(f'ser {validated_data}')
+            print(f'ser {images}')
+            card = FundraisingCard.objects.create(**validated_data)
+            for image_data in images:
+                image, created = FundraisingCardImage.objects.get_or_create(photo=image_data, card=card)
+            return card
+        
+        def update(self, instance, validated_data):
+        
+            instance.title = validated_data.get('title', instance.title)
+            instance.content = validated_data.get('content', instance.content)
+            instance.thumbnail = validated_data.get('thumbnail', instance.thumbnail)
+            
+            try:
+                images_data = self.context.get('request').data.pop('images')
+            except:
+                images_data = None
+
+            if images_data is not None:
+                image_instance_list = []
+                for image_data in images_data:
+                    image, created = Image.objects.get_or_create(image=image_data)
+                    image_instance_list.append(image)
+
+                instance.images.set(image_instance_list)
+
+            instance.save()  # why? see base class code; need to save() to make auto_now work
+            return instance
 
         # def create(self, validated_data):
         #     image = validated_data.pop('images')

@@ -41,12 +41,13 @@ class CategoryViewSet(viewsets.ModelViewSet):
 #             return Response({'info': 'invalid data!'})
 
 class FundraisingCardAPIView(generics.GenericAPIView):
+
     serializer_class = FundraisingCardSerializer
-    parser_classes = (FormParser, MultiPartParser)
+    parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request):
         print(request.data)
-        return Response('asd')
+        return Response(request.data)
 
 # class FundraisingCardViewSet(viewsets.ModelViewSet):
 #     queryset = FundraisingCard.objects.all()
@@ -55,23 +56,17 @@ class FundraisingCardAPIView(generics.GenericAPIView):
 #     # http_method_names = ['get']
 #     # permission_classes = (IsAuthenticated,)
 #
-#     def post(self, request):
-#         print(request.data)
-#         serializer = FundraisingCardSerializer(data=request.data)
-#         if serializer.is_valid():
-#             return Response('asdd')
-#         return Response('sad')
-#         # # images = request.data.pop('images')
-#         # img_serializer = FundraisingCardSerializedSerializer(data=request.data)
-#         # # data = request.data
-#         return Response({'response': 'asd'})
-#
-#     # def get_parsers(self):
-#     #     if getattr(self, 'swagger_fake_view', False):
-#     #         return []
-#     #
-#     #     return (FormParser, MultiPartParser) # super().get_parsers()
-#
+    # def post(self, request):
+    #     print(request.data)
+    #     serializer = FundraisingCardSerializer(data=request.data, )
+    #     if serializer.is_valid():
+    #         return Response('asd')
+    #     return Response('sad')
+        # # images = request.data.pop('images')
+        # img_serializer = FundraisingCardSerializedSerializer(data=request.data)
+        # # data = request.data
+        # return Response({'response': 'asd'})
+
 
 class VolunteeringCardViewSet(viewsets.ModelViewSet):
     queryset = VolunteeringCard.objects.all()
