@@ -33,11 +33,7 @@ class FundraisingCard(models.Model):
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
     target_amnt = models.FloatField(_('target_amnt'), db_column='target_amnt',blank=False, default=0)
     deadline = models.DateTimeField(
-<<<<<<< HEAD
-        _('deadline'), 
-=======
         _('deadline'),
->>>>>>> origin
         db_column='deadline',
         blank=True,
         null=True
@@ -64,12 +60,7 @@ class FundraisingCard(models.Model):
     @property
     def total(self):
         donations = self.donations.all()
-<<<<<<< HEAD
-        # total = sum([item.amount for item in donations])
         total = sum([item.amount if item.payment_success else 0 for item in donations])
-=======
-        total = sum([item.donation_amnt for item in donations])
->>>>>>> origin
         return total
 
     # TO FIX
