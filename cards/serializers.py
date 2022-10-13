@@ -21,7 +21,7 @@ class FundraisingImageSerializer(serializers.ModelSerializer):
 
 
 class FundraisingCardSerializer(serializers.ModelSerializer):
-    card_images = FundraisingImageSerializer(many=True, read_only=True)
+    images = FundraisingImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = FundraisingCard
@@ -36,7 +36,13 @@ class FundraisingCardSerializer(serializers.ModelSerializer):
             'is_approved',
             'total',
             'contacts',
-            'card_images'
+            'images'
+        )
+        read_only_fields = (
+            'is_urgent',
+            'is_active',
+            'is_approved',
+            'images'
         )
 
 
@@ -59,22 +65,26 @@ class VolunteeringLocationSerializer(serializers.ModelSerializer):
 
 
 class VolunteeringCardSerializer(serializers.ModelSerializer):
-    card_images = VolunteeringImageSerializer(many=True, read_only=True)
+    images = VolunteeringImageSerializer(many=True, read_only=True)
     documents = VolunteeringDocumentSerializer(many=True, read_only=True)
     locations = VolunteeringLocationSerializer(many=True, read_only=True)
 
     class Meta:
         model = VolunteeringCard
+
         fields = (
             'title',
             'description',
-            'responsibility',
-            'requirements',
             'start_dt',
             'end_dt',
             'contacts',
             'is_active',
-            'card_images',
+            'images',
+            'documents',
+            'locations'
+        )
+        read_only_fields = (
+            'images',
             'documents',
             'locations'
         )

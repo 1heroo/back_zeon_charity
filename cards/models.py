@@ -33,7 +33,11 @@ class FundraisingCard(models.Model):
     description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
     target_amnt = models.FloatField(_('target_amnt'), db_column='target_amnt',blank=False, default=0)
     deadline = models.DateTimeField(
+<<<<<<< HEAD
         _('deadline'), 
+=======
+        _('deadline'),
+>>>>>>> origin
         db_column='deadline',
         blank=True,
         null=True
@@ -60,8 +64,12 @@ class FundraisingCard(models.Model):
     @property
     def total(self):
         donations = self.donations.all()
+<<<<<<< HEAD
         # total = sum([item.amount for item in donations])
         total = sum([item.amount if item.payment_success else 0 for item in donations])
+=======
+        total = sum([item.donation_amnt for item in donations])
+>>>>>>> origin
         return total
 
     # TO FIX
@@ -112,7 +120,7 @@ class FundraisingCard(models.Model):
 
 class VolunteeringCard(models.Model):
     title = models.CharField(_('title'), db_column='title', max_length=100, blank=False)
-    description = models.TextField(_('description'), db_column='description', max_length=1000, blank=False)
+    description = models.TextField(_('description'), db_column='description', max_length=5000, blank=False)
     start_dt = models.DateTimeField(
         _('start_dt'), 
         db_column='start_dt',
@@ -125,8 +133,6 @@ class VolunteeringCard(models.Model):
         blank=True,
         null=True
     )
-    responsibility = models.TextField(_('responsibility'), db_column='responsibility', max_length=1000, blank=False)
-    requirements = models.TextField(_('requirements'), db_column='requirements', max_length=1000, blank=False)
 
     contacts = models.TextField(_('contacts'), db_column='contacts', max_length=500, blank=False, null=False)
 

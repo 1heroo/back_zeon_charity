@@ -4,7 +4,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'categories', views.CategoryViewSet)
-router.register(r'cards', views.FundraisingCardViewSet)
+router.register(r'fundraising', views.FundraisingCardViewSet)
 router.register(r'volunteering', views.VolunteeringCardViewSet)
 
 urlpatterns = [

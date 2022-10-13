@@ -59,6 +59,9 @@ class ActivationAPIView(generics.GenericAPIView):
             return Response('Invalid code', status=status.HTTP_400_BAD_REQUEST)
 
 
+# class MyTokenObtainPairView(TokenObtainPairView):
+#     serializer_class = MyTokenObtainPairSerializer
+
 class ResetPasswordAPIView(generics.GenericAPIView):
     serializer_class = ResetPasswordSerializer
 

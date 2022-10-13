@@ -1,9 +1,22 @@
+from django.shortcuts import render
+from rest_framework import viewsets
+from .models import *
 from .serializers import *
+from rest_framework.decorators import action
+from hashlib import md5
 from user.serializers import RegUserSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics
 from rest_framework import filters
+# from django_filters.rest_framework import DjangoFilterBackend
+from django.core.paginator import Paginator
+
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -11,27 +24,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
-class FundraisingCardViewSet(viewsets.ModelViewSet):
-    queryset = FundraisingCard.objects.all()
-    serializer_class = FundraisingCardSerializer
-    http_method_names = ['get', 'post']
-    permission_classes = (IsAuthenticated,)
-
-
-class VolunteeringCardViewSet(viewsets.ModelViewSet):
-    queryset = VolunteeringCard.objects.all()
-    serializer_class = VolunteeringCardSerializer
-    http_method_names = ['get', 'post']
-    permission_classes = (IsAuthenticated,)
-
-# class CreateCategory(generics.CreateAPIView):
+# class createCategory(generics.CreateAPIView):
 #     queryset = Category.objects.all()
 #     serializer_class = CategorySerializer
 #
 #     def post(self, request):
 #         try:
 #             data = request.data
-#             new_obj = Category.objects.create(**data)
+#             new_obj = Card.objects.create(**data)
 #
 #             new_obj.save()
 #
@@ -39,38 +39,20 @@ class VolunteeringCardViewSet(viewsets.ModelViewSet):
 #         except:
 #             return Response({'info': 'invalid data!'})
 
-#
-# class VolunteerViewSet(viewsets.ModelViewSet):
-#     queryset = VolunteeringCard.objects.all()
-#     serializer_class = VolunteerCardSerializer
-#
-#
-# class VolunteerPageViewSet(viewsets.ModelViewSet):
-#     queryset = Volunteer.objects.all()
-#     serializer_class = VolunteerSerializer
-#
-#     def list(self, request, *args, **kwargs):
-#         queryset = Volunteer.objects.filter(id=kwargs['volunteer_id'])
-#
-#         serializer = self.get_serializer(queryset, many=True)
-#         return Response(serializer.data)
 
-# class CreateFundraisingCard(generics.CreateAPIView):
-#     queryset = FundraisingCard.objects.all()
-#     serializer_class = FundraisingCardSerializer
-#
-#     def post(self, request):
-#         try:
-#             data = request.data
-#             current_category = Category.objects.get(pk=data['category'])
-#             data['category'] = current_category
-#             new_obj = FundraisingCard.objects.create(**data)
-#
-#             new_obj.save()
-#
-#             return Response({'info': 'successfuly added'})
-#         except:
-#             return Response({'info': 'invalid data!'})
+class FundraisingCardViewSet(viewsets.ModelViewSet):
+    queryset = FundraisingCard.objects.all()
+    serializer_class = FundraisingCardSerializer
+    http_method_names = ['get']
+    
+    permission_classes = (IsAuthenticated,)
+
+
+class VolunteeringCardViewSet(viewsets.ModelViewSet):
+    queryset = VolunteeringCard.objects.all()
+    serializer_class = VolunteeringCardSerializer
+    http_method_names = ['get']
+    permission_classes = (IsAuthenticated,)
 
 
 # class CategoryCardsViewSet(viewsets.ModelViewSet):

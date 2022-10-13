@@ -1,3 +1,4 @@
+from hashlib import blake2b
 import re
 
 from rest_framework.exceptions import AuthenticationFailed
@@ -5,6 +6,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from .models import MyUser
 from django.core.mail import send_mail
 from django.urls import reverse
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.core.validators import EmailValidator, RegexValidator
 from django.contrib.sites.shortcuts import get_current_site
 from decouple import config
@@ -80,6 +82,29 @@ class RegUserSerializer(serializers.Serializer):
         return user
 
 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+
+    def validate_email(self, email):
+        if MyUser.objects.filter(email=email).exists():
+
+            if MyUser.objects.get(email=email).is_active:
+                return email
+            raise serializers.ValidationError('Not activated user')
+
+        else:
+            raise serializers.ValidationError('Email Not Found')
+
+
+    def validate(self, attrs):
+        data = super(MyTokenObtainPairSerializer, self).validate(attrs)
+        data['first_name'] = self.user.first_name
+        data['last_name'] = self.user.last_name
+        data['email'] = attrs['email']
+        data['phone_number'] = self.user.phone_number
+        data['password'] = attrs['password']
+        return data
+
+
 class ResetPasswordSerializer(serializers.Serializer):
     email = serializers.EmailField(
         validators=(EmailValidator, )
@@ -120,6 +145,13 @@ class ResetPasswordCompleteSerializer(serializers.Serializer):
     )
     uidb64 = serializers.CharField(min_length=1, write_only=True)
     token = serializers.CharField(min_length=1, write_only=True)
+
+
+class ForgetPasswordSerializer(serializers.Serializer):
+    email = serializers.CharField(
+        max_length=100,
+        validators=(EmailValidator, )
+    )
 
     def validate(self, attrs):
         try:
