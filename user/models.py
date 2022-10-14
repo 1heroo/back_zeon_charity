@@ -40,10 +40,11 @@ class MyUser(AbstractUser, PermissionsMixin):
 
 
 def init_wallet(sender, instance, *args, **kwargs):
-    wallet_obj = Wallet(
-        user=instance,
-    )
-    wallet_obj.save()
+    if not Wallet.objects.filter(user=instance):
+        wallet_obj = Wallet(
+            user=instance,
+        )
+        wallet_obj.save()
 
 
 post_save.connect(init_wallet, sender=MyUser)

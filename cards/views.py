@@ -28,7 +28,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class FundraisingCardAPIView(generics.GenericAPIView):
 
     serializer_class = FundraisingCardSerializer
-    parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request):
         print(request.data)
