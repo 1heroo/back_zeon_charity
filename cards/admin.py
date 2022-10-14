@@ -74,6 +74,7 @@ class VolunteeringCardAdmin(admin.ModelAdmin):
 
 admin.site.register(VolunteeringCard, VolunteeringCardAdmin)
 
+
 class DonationsAdmin(admin.ModelAdmin):
     list_display = (
         'user_id',
@@ -83,4 +84,4 @@ class DonationsAdmin(admin.ModelAdmin):
     )
 
 
-# admin.site.register(Donations, DonationsAdmin)
+admin.site.register(CardApplyModel)
