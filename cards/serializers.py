@@ -42,7 +42,7 @@ class FundraisingCardSerializer(serializers.ModelSerializer):
             'is_urgent',
             'is_active',
             'is_approved',
-            'images'
+
         )
 
 

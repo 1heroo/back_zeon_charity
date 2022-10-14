@@ -1,4 +1,4 @@
-import crypt
+import random
 import hashlib
 from collections import OrderedDict
 
@@ -20,7 +20,10 @@ def get_sig(param, method):
 
 
 def get_salt():
-    return crypt.mksalt(crypt.METHOD_SHA512)
+    CHARACTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    salt = ''.join(random.choice(CHARACTERS) for i in range(16))
+    # Use SHA512
+    return '$6$' + salt
 
 
 def is_real_signature(request):
