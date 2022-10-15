@@ -130,3 +130,20 @@ class CardApplySerializer(serializers.ModelSerializer):
         fields = ('title', 'description', 'contacts', 'user')
 
         read_only_fields = ('user', )
+
+
+class FundraisingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FundraisingCard
+        fields = '__all__'
+
+
+class VolunteeringSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VolunteeringCard
+        fields = '__all__'
+
+
+
+
+

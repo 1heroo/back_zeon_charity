@@ -1,4 +1,6 @@
+from django.db.models import Q
 from django.shortcuts import render
+from drf_multiple_model.views import ObjectMultipleModelAPIView
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
@@ -7,7 +9,7 @@ from hashlib import md5
 from user.serializers import RegUserSerializer
 from rest_framework.parsers import FormParser, MultiPartParser
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -91,3 +93,26 @@ class CardApply(generics.GenericAPIView):
         request = CardApplyModel(**data)
         request.save()
         return Response({'response': 'Successfully created new apply'})
+
+
+class SearchView(APIView):
+    filter_backends = [filters.SearchFilter]
+
+    def get(self, request):
+
+        query = request.query_params.get('search')
+
+        first_ser = FundraisingSerializer(FundraisingCard.objects.filter(
+            Q(title__icontains=query)
+            | Q(description__icontains=query)
+        ), many=True)
+
+        second_ser = VolunteeringSerializer(VolunteeringCard.objects.filter(
+            Q(title__icontains=query)
+            | Q(description__icontains=query)
+        ), many=True)
+
+        return Response({"FundraisingCard": first_ser.data, "VolunteeringCard": second_ser.data})
+
+
+
