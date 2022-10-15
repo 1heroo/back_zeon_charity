@@ -25,7 +25,7 @@ class UserProfileAPIView(generics.GenericAPIView):
 
     def get(self, request):
         user = request.user
-        serializer = self.get_serializer(user)
+        serializer = self.get_serializer(data=user)
         return Response({'user-info': serializer.data}, status=status.HTTP_200_OK)
 
     def put(self, request):
@@ -103,3 +103,5 @@ class ResetPasswordCompleteAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response({'Response': f'Password successfully changed!'})
 
+# class MyTokenObtainPairView(TokenObtainPairView):
+#     serializer_class = MyTokenObtainPairSerializer

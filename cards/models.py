@@ -42,10 +42,12 @@ class FundraisingCard(models.Model):
 
     is_approved = models.BooleanField(default=False)
 
+
     @property
     def is_active(self):
-        if timezone.now() < self.deadline:
-            return True
+        if self.deadline:
+            if timezone.now() < self.deadline:
+                return True
         return False
 
     @property
@@ -60,7 +62,7 @@ class FundraisingCard(models.Model):
     @property
     def total(self):
         donations = self.donations.all()
-        total = sum([item.donation_amnt for item in donations])
+        total = sum([item.amount if item.payment_success else 0 for item in donations])
         return total
 
     # TO FIX
@@ -79,34 +81,34 @@ class FundraisingCard(models.Model):
         return self.title
 
 
-class Donations(models.Model):
-    user = models.ForeignKey(
-        verbose_name=_('user'),
-        to=MyUser,
-        related_name='users',
-        on_delete=models.SET_NULL,
-        null=True, blank=True
-    )
-    card = models.ForeignKey(
-        verbose_name=_('card'),
-        to=FundraisingCard,
-        related_name='donations',
-        on_delete=models.SET_NULL,
-        null=True, blank=True
-    )
-    donation_amnt = models.FloatField(_('donation_amnt'), db_column='donation_amnt',blank=False, default=0)
-    payment_dt = models.DateTimeField(
-        verbose_name=_('payment_dt'),
-        default=timezone.now,
-        db_column='payment_dt',
-        blank=True,
-        null=True
-    )
-
-    class Meta:
-        db_table = 'donation'
-        verbose_name = _('Donation')
-        verbose_name_plural = _('Donations')
+# class Donations(models.Model):
+#     user = models.ForeignKey(
+#         verbose_name=_('user'),
+#         to=MyUser,
+#         related_name='users',
+#         on_delete=models.SET_NULL,
+#         null=True, blank=True
+#     )
+#     card = models.ForeignKey(
+#         verbose_name=_('card'),
+#         to=FundraisingCard,
+#         related_name='donations',
+#         on_delete=models.SET_NULL,
+#         null=True, blank=True
+#     )
+#     donation_amnt = models.FloatField(_('donation_amnt'), db_column='donation_amnt',blank=False, default=0)
+#     payment_dt = models.DateTimeField(
+#         verbose_name=_('payment_dt'),
+#         default=timezone.now,
+#         db_column='payment_dt',
+#         blank=True,
+#         null=True
+#     )
+#
+#     class Meta:
+#         db_table = 'donation'
+#         verbose_name = _('Donation')
+#         verbose_name_plural = _('Donations')
 
 
 class VolunteeringCard(models.Model):
@@ -212,3 +214,13 @@ class VolunteeringCardLocation(models.Model):
         db_table = 'card_locations'
         verbose_name = _('Volunteering Card Location')
         verbose_name_plural = _('Volunteering Card Locations')
+
+
+class CardApplyModel(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(_('title'), max_length=100)
+    description = models.TextField(_('description'), max_length=1000)
+    contacts = models.TextField(_('contacts'), db_column='contacts', max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.title

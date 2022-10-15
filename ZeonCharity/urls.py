@@ -21,7 +21,6 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from ZeonCharity import settings
 
-
 urlpatterns = i18n_patterns(
     path('', include('cards.urls')),
     path('admin/', admin.site.urls),
@@ -31,7 +30,9 @@ urlpatterns = i18n_patterns(
 
 
     path('search/', views.SearchModelView.as_view({'get': 'list'})),
-    # path('stats/', views.CalculateStat.as_view()),
-    path('payment/', views.paymentHandler.as_view())
+
+    # path('payment/', views.paymentHandler.as_view()),
+    path('payments/', include('payments.urls')),
+
 ) + swagger + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
